@@ -1,0 +1,30 @@
+.post {
+	margin-bottom: 4em;
+
+	h2 {
+		margin: 1.5em 0 0.5em 0;
+	}
+}
+
+figure {
+	padding: 0;
+	margin: 0 0 2em 0;
+	max-width: 100%;
+	@include border-box;
+
+	img {
+		margin: 0;
+		max-width: 100%;
+		display: block;
+	}
+
+	figcaption {
+		border-bottom: 1px solid #eee;
+		padding: 0.2em 0;
+		font-size: 0.8em;
+	}
+}
+
+.bullet {
+	color: #ccc;
+}
