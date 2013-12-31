@@ -1,3 +1,5 @@
+*Originally posted on [Source](http://source.opennews.org/en-US/articles/introducing-ractivejs/), the blog for newsroom developers and hacker-journalists*
+
 Making interactives is hard. You have to:
 
 * figure out the story
