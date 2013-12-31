@@ -165,9 +165,9 @@ function processPost ( postData, slug ) {
 }
 
 function sortPosts ( postA, postB ) {
-	return +postA.year  - +postB.year  ||
-	       +postA.month - +postB.month ||
-	       +postA.day   - +postB.day;
+	return +postB.year  - +postA.year  ||
+	       +postB.month - +postA.month ||
+	       +postB.day   - +postA.day;
 }
 
 function preprocessMarkdown ( markdown ) {
