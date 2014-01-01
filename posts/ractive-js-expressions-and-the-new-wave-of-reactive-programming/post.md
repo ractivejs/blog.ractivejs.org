@@ -1,4 +1,4 @@
-*Originally posted at [flippinawesome.org](flippinawesome.org/2013/08/19/ractive-js-expressions-and-the-new-wave-of-reactive-programming/)*
+*Originally posted at [flippinawesome.org](http://flippinawesome.org/2013/08/19/ractive-js-expressions-and-the-new-wave-of-reactive-programming/)*
 
 Dedicated followers of JavaScript fashion will by now have noticed this season’s hot new trend. If you haven’t spotted it yet, here are a few projects sporting this style on the GitHub catwalk – [React](http://facebook.github.io/react/), [Reactive.js](https://github.com/mattbaker/Reactive.js), [component/reactive](https://github.com/component/reactive) and [reactive.coffee](https://github.com/yang/reactive-coffee).
 
