@@ -104,7 +104,7 @@ module.exports = function ( grunt ) {
 				preserveWhitespace: true
 			}).toHTML();
 
-			grunt.file.write( 'build/' + post.slug + '.html', rendered );
+			grunt.file.write( 'build/posts/' + post.slug + '.html', rendered );
 		});
 	});
 
