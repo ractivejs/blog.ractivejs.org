@@ -1,6 +1,6 @@
 <item>
 	<title><%= title %></title>
-	<description><%= content %></description>
+	<description><%= xml %></description>
 	<link>http://blog.ractivejs.org/posts/<%= slug %></link>
 	<guid><%= slug %></guid>
 	<pubDate><%= rssPubDate %></pubDate>

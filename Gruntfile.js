@@ -105,7 +105,7 @@ module.exports = function ( grunt ) {
 		// render RSS feed
 		rssPostTemplate = grunt.file.read( 'templates/rss-post.xml' );
 		rssPosts = postList.map( function ( post ) {
-			post.content = convertToXml( post.content );
+			post.xml = convertToXml( post.content );
 
 			return rssPostTemplate.replace( /<%=\s*([a-zA-Z]+)\s*%>/g, function ( match, key ) {
 				return post[ key ];
