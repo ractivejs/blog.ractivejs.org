@@ -1,0 +1,7 @@
+<item>
+	<title><%= title %></title>
+	<description><%= content %></description>
+	<link>http://blog.ractivejs.org/posts/<%= slug %></link>
+	<guid><%= slug %></guid>
+	<pubDate><%= rssPubDate %></pubDate>
+</item>

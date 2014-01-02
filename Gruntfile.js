@@ -63,7 +63,7 @@ module.exports = function ( grunt ) {
 
 	grunt.registerTask( 'render', function () {
 
-		var Ractive, postsData, post, slug, postList, rendered, postTemplate;
+		var Ractive, postsData, post, slug, postList, rendered, postTemplate, rssPostTemplate, rssPosts, rss;
 
 		Ractive = require( 'ractive' );
 
@@ -90,9 +90,21 @@ module.exports = function ( grunt ) {
 
 		grunt.file.write( 'build/index.html', rendered );
 
-		postTemplate = grunt.file.read( 'templates/post.html' );
+		// render RSS feed
+		rssPostTemplate = grunt.file.read( 'templates/rss-post.xml' );
+		rssPosts = postList.map( function ( post ) {
+			return rssPostTemplate.replace( /<%=\s*([a-z]+)\s*%>/g, function ( match, key ) {
+				return post[ key ];
+			});
+		});
+
+		rendered = grunt.file.read( 'templates/rss.xml' ).replace( '<%= posts %>', rssPosts );
+
+		grunt.file.write( 'build/rss.xml', rendered );
 
 		// render individual posts
+		postTemplate = grunt.file.read( 'templates/post.html' );
+
 		postList.forEach( function ( post ) {
 			var rendered = new Ractive({
 				template: postTemplate,
@@ -126,7 +138,7 @@ module.exports = function ( grunt ) {
 };
 
 function processPost ( postData, slug ) {
-	var post, dateMatch, breakPattern, breakMatch, previewMarkdown, postMarkdown;
+	var post, dateMatch, breakPattern, breakMatch, previewMarkdown, postMarkdown, date;
 
 	post = {
 		slug: slug,
@@ -147,9 +159,16 @@ function processPost ( postData, slug ) {
 	}
 
 	post.year = +dateMatch[1];
-	post.month = +dateMatch[2];
-	post.monthName = [ null, 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ][ post.month ];
+	post.month = +dateMatch[2] - 1;
+	post.monthName = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ][ post.month ];
 	post.day = +dateMatch[3];
+
+	date = new Date( post.year, post.month, post.day );
+
+	post.rssPubDate = [ 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ][ date.getDay() ] +
+	                  ', ' + ( post.day < 10 ? '0' + post.day : post.day ) + ' ' +
+	                  post.monthName.substr( 0, 3 ) + ' ' +
+	                  post.year + ' 12:00:00 +0000';
 
 	breakPattern = /<!--\s*break\s*-->/;
 	breakMatch = breakPattern.exec( postData.post );
