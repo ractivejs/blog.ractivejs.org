@@ -52,7 +52,7 @@ updateUsername(model.username);
 updateMsgCount(model.msgCount);
 ```
 
-Better, except that now we've added two extra <span> elements to the DOM. That means more work for the browser, which can become particularly noticeable on mobile devices. And we've got to traverse the DOM and store references to elements.
+Better, except that now we've added two extra `&lt;span&gt;` elements to the DOM. That means more work for the browser, which can become particularly noticeable on mobile devices. And we've got to traverse the DOM and store references to elements.
 
 ## 3. Templating
 
@@ -120,7 +120,7 @@ Initially, Ractive parses the template and determines that `{{msgCount}}` should
 
 When you call `view.set()`, Ractive compares the new data against its current state, and scans its internal dependency graph to see if any part of the DOM needs to be updated. If so, it only touches those parts - which means no DOM nodes will be created or destroyed.
 
-The browser has much less work to do, but - and this is the crucial part - so does the developer. The benefits of this approach become increasingly apparent as you deal with more complex templates, representing more complex data. You can see for yourself how it makes life easier by following the [tutorials](http://learn.ractivejs.org)</a> or checking out the [examples](http://examples.ractivejs.org).
+The browser has much less work to do, but - and this is the crucial part - so does the developer. The benefits of this approach become increasingly apparent as you deal with more complex templates, representing more complex data. You can see for yourself how it makes life easier by following the [tutorials](http://learn.ractivejs.org) or checking out the [examples](http://examples.ractivejs.org).
 
 ## Beyond data binding
 
