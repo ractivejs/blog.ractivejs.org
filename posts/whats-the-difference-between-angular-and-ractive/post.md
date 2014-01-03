@@ -6,6 +6,8 @@ I was going to begin the series by comparing Ractive to [React.js](facebook.gith
 
 But the question I've had more frequently - and [most recently](http://stackoverflow.com/questions/20893066/differences-between-ractivejs-and-angularjs) - is how Ractive compares to [Angular](http://angularjs.org/). So I'm going to start there.
 
+<!-- break -->
+
 
 ## What is Angular?
 
@@ -13,7 +15,7 @@ You're kidding, right? Angular is a wildly successful project. Its [GitHub repo]
 
 <aside>
 	<div class='aside-inner'>
-		<p><a href='../assets/images/anglebars.jpg'><img src='../assets/images/anglebars.jpg' style='width: 5em; float: right; margin: 0 0 1em 1em'></a>Fun fact! Way back in the mists of time, Ractive was called Anglebars - because it was kind of halfway between Angular and Handlebars. I even ripped off the logo. In other words, Angular was a big inspiration for Ractive.
+		<p><a href='../assets/images/anglebars.jpg'><img src='../assets/images/anglebars.jpg' style='width: 5em; float: right; margin: 0 0 1em 1em'></a>Fun fact! Way back in the mists of time, Ractive was called Anglebars - because it was kind of halfway between Angular and Handlebars. I even ripped off the logo. In other words, Angular was a big inspiration for Ractive.</p>
 	</div>
 </aside>
 
@@ -26,13 +28,17 @@ One word: simplicity. Angular looks easy at first, but to master it you have to 
 
 Ractive, on the other hand, is designed to be as simple as possible, but no simpler. That's because of its heritage: it was [created in the newsroom](the-origins-of-ractive) of [theguardian.com](http://theguardian.com) for building interactive news applications. These apps have to be built in a very short space of time and work reliably across different environments - there's no time for prototyping etc. Just build it and ship it. You can't spend long optimising things, so the library has to make smart decisions for you.
 
+\\\
 <blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/dmitrigrabov">@dmitrigrabov</a> Simplest binding framework I&#39;ve ever used is new: <a href="https://twitter.com/RactiveJS">@RactiveJS</a> from the Guardian. &#10;&#10;1. have object&#10;2. have template&#10;&#10;Done.</p>&mdash; Mike MacCana (@mikemaccana) <a href="https://twitter.com/mikemaccana/statuses/411108002297806848">December 12, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+///
 
 Most of all, a lot of people building these kinds of apps aren't experienced developers - they're journalists or graphics people who have learned some JavaScript because they want to expand their skillsets and stay relevant, not because they get a kick out of watching Douglas Crockford videos.
 
+\\\
 <blockquote class="twitter-tweet" lang="en"><p>First piece of code that actually makes sense to my design-oriented brain: <a href="https://twitter.com/RactiveJS">@RactiveJS</a> - still on lesson 5, though</p>&mdash; K. Ant.  (@konstantinosant) <a href="https://twitter.com/konstantinosant/statuses/405590478956920832">November 27, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+///
 
 Don't try explaining to a hacker-journalist that they need to call `$scope.digest()` or that, having just got their head around minification, they need to perform some elaborate maneouvres to prevent the dependency injection from breaking - trust me, they won't care!
 
@@ -68,12 +74,14 @@ Miško Hevery, the father of Angular, wrote [this Stack Overflow post](http://st
 
 True, but Angular's `$digest` loop is a clever solution for a problem that no other library has! In any case, Pete Hunt of [React.js](facebook.github.io/react/) fame [takes issue](http://www.reddit.com/r/javascript/comments/1oo1y8) with the notion that Angular's dirty checking is fast enough.
 
-A final important difference is in how your app is rendered. Traditional templating engines compile a string template to a function that, given some data, returns another string (which typically is `innerHTML`'d into the page). Angular (and also Knockout) work by traversing the DOM, reading attributes, and setting up bindings accordingly. Aside from the [FOUC](http://iarouse.com/blog/2013/10/30/angularjs-avoid-flash-of-unstyled-content-fouc/) that you then have to work around, this means that your page is peppered with non-validating gubbins like `<img ng-src='{{thumbnail}}'>`.
+A final important difference is in how your app is rendered. Traditional templating engines compile a string template to a function that, given some data, returns another string (which typically is `innerHTML`'d into the page). Angular (and also Knockout) work by traversing the DOM, reading attributes, and setting up bindings accordingly. Aside from the [FOUC](http://iarouse.com/blog/2013/10/30/angularjs-avoid-flash-of-unstyled-content-fouc/) that you then have to work around, this means that your page is peppered with non-validating gubbins like `ng-model`.
 
 Ractive takes a different approach. Your template lives as a string, and is parsed (on the server, if needs be - Ractive is [isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/)) into a tree-like structure that can be transported as JSON. From there, Ractive constructs a lightweight [parallel DOM](http://docs.ractivejs.org/latest/parallel-dom) containing all the information it needs to construct the real DOM and set up data-binding etc. In my view, this is a more hygienic approach. Parsing the template before the browser has a chance to has many benefits, even if some people do question the sanity of doing so:
 
+\\\
 <blockquote class="twitter-tweet" lang="en"><p>This is both brilliant &amp; ridiculous at the same time: “Introducing Ractive.js: next-generation DOM manipulation” <a href="http://t.co/17uHMKZFCQ">http://t.co/17uHMKZFCQ</a></p>&mdash; Rev Dan Catt (@revdancatt) <a href="https://twitter.com/revdancatt/statuses/360340071133622272">July 25, 2013</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+///
 
 
 ## Honestly, just try it
