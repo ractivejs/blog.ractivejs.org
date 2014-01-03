@@ -42,7 +42,7 @@
 					<p class='meta'>
 						[[#authorUrl]]<a href='[[authorUrl]]'>[[author]]</a>[[/authorUrl]]
 						[[^authorUrl]][[author]][[/authorUrl]]
-						<span class='bullet'>&bull;</span> [[day]] [[monthName]] [[year]]</p>
+						<span class='bullet'>&bull;</span> [[day]] [[monthName]] [[year]] <span class='bullet'>&bull;</span> <a href='#disqus_thread' data-disqus-identifier='[[slug]]'>Comments</a></p>
 				</header>
 
 				[[#poster]]
@@ -88,11 +88,17 @@
 
 		// Disqus
 		var disqus_shortname = 'ractivejs';
+		var disqus_identifier = '[[post.slug]]';
+		var disqus_url = 'http://blog.ractivejs.org/posts/[[post.slug]]';
 
 		(function() {
-		    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-		    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-		    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		    var s = function (url) {
+		    	var scr = document.createElement('script'); scr.type = 'text/javascript'; scr.async = true;
+		    	scr.src = url;
+		    	(document.head || document.body).appendChild(scr);
+		    };
+		    s('//ractivejs.disqus.com/embed.js');
+		    s('//ractivejs.disqus.com/count.js');
 		})();
 	</script>
 

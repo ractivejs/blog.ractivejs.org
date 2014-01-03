@@ -39,7 +39,7 @@
 			<article class='preview'>
 				<header class='post-header'>
 					<h1><a class='stealth' href='posts/[[slug]]'>[[title]]</a></h1>
-					<p class='meta'>[[day]] [[monthName]] [[year]]</p>
+					<p class='meta'>[[day]] [[monthName]] [[year]] <span class='bullet'>&bull;</span> <a href='posts/[[slug]]#disqus_thread' data-disqus-identifier='[[slug]]'>Comments</a></p>
 				</header>
 
 				[[#poster]]
@@ -67,6 +67,19 @@
 
 		ga('create', 'UA-5602942-5', 'ractivejs.org');
 		ga('send', 'pageview');
+
+
+
+		// Disqus
+		var disqus_shortname = 'ractivejs'; // required: replace example with your forum shortname
+
+		/* * * DON'T EDIT BELOW THIS LINE * * */
+		(function () {
+		var s = document.createElement('script'); s.async = true;
+		s.type = 'text/javascript';
+		s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+		(document.head || document.body).appendChild(s);
+		}());
 	</script>
 
 	<script src='js/prettify.js'></script>
