@@ -153,7 +153,11 @@ module.exports = function ( grunt ) {
 };
 
 function processPost ( postData, slug ) {
-	var post, dateMatch, breakPattern, breakMatch, previewMarkdown, postMarkdown, date;
+	var post, dateMatch, breakPattern, breakMatch, previewMarkdown, postMarkdown, date, marked, random, preprocessed, processed;
+
+	// markdown renderer
+	marked = require( 'marked' );
+	random = Math.round( Math.random() * 1000000 );
 
 	post = {
 		slug: slug,
@@ -188,12 +192,12 @@ function processPost ( postData, slug ) {
 	breakPattern = /<!--\s*break\s*-->/;
 	breakMatch = breakPattern.exec( postData.post );
 	if ( breakMatch ) {
-		previewMarkdown = preprocessMarkdown( postData.post.substr( 0, breakMatch.index ) );
-		post.preview = postprocess( require( 'marked' )( previewMarkdown ) );
+		preprocessed = preprocessMarkdown( postData.post.substr( 0, breakMatch.index ), random );
+		post.preview = postprocess( marked( preprocessed.markdown ), preprocessed.placeholders, random );
 	}
 
-	postMarkdown = preprocessMarkdown( postData.post.replace( breakPattern, '' ) );
-	post.content =  postprocess( require( 'marked' )( postMarkdown ) );
+	preprocessed = preprocessMarkdown( postData.post.replace( breakPattern, '' ), random );
+	post.content =  postprocess( marked( preprocessed.markdown ), preprocessed.placeholders, random );
 
 	return post;
 }
@@ -204,7 +208,9 @@ function sortPosts ( postA, postB ) {
 	       +postB.day   - +postA.day;
 }
 
-function preprocessMarkdown ( markdown ) {
+function preprocessMarkdown ( markdown, random ) {
+	var placeholders = [], uid = 0;
+
 	markdown = markdown.replace( /```([a-z]+)?\n([\s\S]+?)\n```/g, function ( match, language, content ) {
 		content = content.replace( /\t/g, '  ' )
 		                 .replace( /</g, '&lt;' )
@@ -213,11 +219,29 @@ function preprocessMarkdown ( markdown ) {
 		return '<pre class="prettyprint' + ( language ? ' lang-' + language : '' ) + '">' + content + '</pre>';
 	});
 
-	return markdown;
+	markdown = markdown.replace( /\\\\\\\n([\s\S]+?)\n\/\/\//g, function ( match, escaped ) {
+		placeholders[ uid ] = escaped;
+		return '${' + random + '-' + uid++ + '}';
+	});
+
+	return {
+		markdown: markdown,
+		placeholders: placeholders
+	};
 }
 
-function postprocess ( html ) {
-	return html.replace( / - /g, ' &ndash; ' );
+function postprocess ( html, placeholders, random ) {
+	var placeholderPattern = new RegExp( '<p>\\$\\{' + random + '-([0-9]+)\\}</p>', 'g' );
+
+	if ( placeholders.length ) {
+		console.log( 'placeholders', placeholders );
+	}
+
+	return html.replace( / - /g, ' &ndash; ' )
+	           .replace( placeholderPattern, function ( match, i ) {
+	           		console.log( 'got a placeholder', i, match );
+	           		return placeholders[i];
+	           });
 }
 
 function convertToXml ( html ) {
