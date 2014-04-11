@@ -3,36 +3,26 @@
 <head>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
-	<title>Ractive.js - next-generation DOM manipulation</title>
+	<title>[[post.title]] | Ractive.js - next-generation DOM manipulation</title>
 
-	<link rel='icon' type='image/png' href='../favicon.png'>
+	<link rel='icon' type='image/png' href='../../assets/favicon.png'>
 
-	<link rel='stylesheet' href='../min.css'>
+	<link rel='stylesheet' href='../../min.css'>
 
 	<!--[if lte IE 8]>
-		<script src='../js/respond.min.js'></script>
+		<script src='../../js/respond.min.js'></script>
 	<![endif]-->
+
+	[[#post.styles]]
+	<style type='text/css'>
+		[[post.styles]]
+	</style>
+	[[/post.styles]]
 </head>
 
 <body>
 
-	<header>
-		<div class='title'>
-			<h1>Ractive.js</h1>
-			<p>Next-generation DOM manipulation</p>
-		</div>
-
-		<ul class='menu'>
-			<li><a href='http://ractivejs.org'>Home</a></li>
-			<li><a href='../'>Blog</a></li>
-			<li><a href='http://learn.ractivejs.org'>Tutorials</a></li>
-			<li><a href='http://examples.ractivejs.org'>Examples</a></li>
-			<li><a href='http://ractivejs.org/plugins'>Plugins</a></li>
-			<li><a href='http://docs.ractivejs.org'>Docs</a></li>
-			<li><a href='http://ractivejs.org/download'>Download</a></li>
-			<li><a href='https://github.com/RactiveJS/Ractive'>GitHub</a></li>
-		</ul>
-	</header>
+	<%= nav('blog') %>
 
 	<main>
 		<article class='post'>
@@ -48,11 +38,11 @@
 				[[#poster]]
 					<figure class='poster'>
 						[[#url]]
-							<a href='[[url]]'><img class='poster' alt='[[caption]]' src='../assets/images/[[src]]'></a>
+							<a href='[[url]]'><img class='poster' alt='[[caption]]' src='../../assets/images/[[src]]'></a>
 						[[/url]]
 
 						[[^url]]
-							<img alt='[[caption]]' src='../assets/images/[[src]]'>
+							<img alt='[[caption]]' src='../../assets/images/[[src]]'>
 						[[/url]]
 
 						[[#caption]]
@@ -73,6 +63,8 @@
 			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 		</section>
 	</main>
+
+	<%= footer %>
 
 
 	<script>
@@ -102,10 +94,18 @@
 		})();
 	</script>
 
-	<script src='../js/prettify.js'></script>
+	<script src='../../js/prettify.js'></script>
 	<script>
 		prettyPrint();
 	</script>
+
+	[[#post.dependencies]]
+		<script src='../../js/[[this]]'></script>
+	[[/post.dependencies]]
+
+	[[#post.script]]
+		<script src='script.js'></script>
+	[[/post.script]]
 
 </body>
 </html>
