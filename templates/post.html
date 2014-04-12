@@ -3,7 +3,7 @@
 <head>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1'>
-	<title>[[post.title]] | Ractive.js - next-generation DOM manipulation</title>
+	<title>[[post.title]] | Blog | Ractive.js</title>
 
 	<link rel='icon' type='image/png' href='../../assets/favicon.png'>
 
@@ -24,17 +24,18 @@
 
 	<%= nav('blog') %>
 
-	<main>
-		<article class='post'>
-			[[#post]]
-				<header class='post-header'>
-					<h1>[[title]]</h1>
-					<p class='meta'>
-						[[#authorUrl]]<a href='[[authorUrl]]'>[[author]]</a>[[/authorUrl]]
-						[[^authorUrl]][[author]][[/authorUrl]]
-						<span class='bullet'>&bull;</span> [[day]] [[monthName]] [[year]] <span class='bullet'>&bull;</span> <a href='#disqus_thread' data-disqus-identifier='[[slug]]'>Comments</a></p>
-				</header>
+	[[#post]]
+		<header class='post-header'>
+			<h1>[[title]]</h1>
+			<p class='meta'>
+				[[#authorUrl]]<a href='[[authorUrl]]'>[[author]]</a>[[/authorUrl]]
+				[[^authorUrl]][[author]][[/authorUrl]]
+				<span class='bullet'>&bull;</span> [[day]] [[monthName]] [[year]] <span class='bullet'>&bull;</span> <a href='#disqus_thread' data-disqus-identifier='[[slug]]'>Comments</a>
+			</p>
+		</header>
 
+		<main>
+			<article class='post'>
 				[[#poster]]
 					<figure class='poster'>
 						[[#url]]
@@ -54,15 +55,16 @@
 				[[/poster]]
 
 				[[[content]]]
-			[[/post]]
-		</article>
 
-		<section class='comments'>
-			<div id="disqus_thread"></div>
-			<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-			<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-		</section>
-	</main>
+			</article>
+
+			<section class='comments'>
+				<div id="disqus_thread"></div>
+				<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+				<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			</section>
+		</main>
+	[[/post]]
 
 	<%= footer %>
 
@@ -94,7 +96,7 @@
 		})();
 	</script>
 
-	<script src='../../js/prettify.js'></script>
+	<script src='../../assets/prettify.js'></script>
 	<script>
 		prettyPrint();
 	</script>
