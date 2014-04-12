@@ -2,7 +2,7 @@ Lots of people have asked what the difference is between Ractive and other libra
 
 Now that I've got round to setting up this blog, a) is no longer an issue. As for b)... well, if I get stuff wrong, people will correct me - this is the Internet, after all. And I'll edit these posts as necessary to keep them accurate.
 
-I was going to begin the series by comparing Ractive to [React.js](facebook.github.io/react/), which in my view is one of the more interesting JavaScript libraries of 2013. It has lots of philosophical similarities to Ractive, but also some stark differences. It should be an interesting study.
+I was going to begin the series by comparing Ractive to [React.js](http://facebook.github.io/react/), which in my view is one of the more interesting JavaScript libraries of 2013. It has lots of philosophical similarities to Ractive, but also some stark differences. It should be an interesting study.
 
 But the question I've had more frequently - and [most recently](http://stackoverflow.com/questions/20893066/differences-between-ractivejs-and-angularjs) - is how Ractive compares to [Angular](http://angularjs.org/). So I'm going to start there.
 
@@ -15,7 +15,7 @@ You're kidding, right? Angular is a wildly successful project. Its [GitHub repo]
 
 <aside>
 	<div class='aside-inner'>
-		<p><a href='../assets/images/anglebars.jpg'><img src='../assets/images/anglebars.jpg' style='width: 5em; float: right; margin: 0 0 1em 1em'></a>Fun fact! Way back in the mists of time, Ractive was called Anglebars - because it was kind of halfway between Angular and Handlebars. I even ripped off the logo. In other words, Angular was a big inspiration for Ractive.</p>
+		<p><a href='../../assets/images/anglebars.jpg'><img src='../../assets/images/anglebars.jpg' style='width: 5em; float: right; margin: 0 0 1em 1em'></a>Fun fact! Way back in the mists of time, Ractive was called Anglebars - because it was kind of halfway between Angular and Handlebars. I even ripped off the logo. In other words, Angular was a big inspiration for Ractive.</p>
 	</div>
 </aside>
 
@@ -72,7 +72,7 @@ Miško Hevery, the father of Angular, wrote [this Stack Overflow post](http://st
 
 > KO dependency tracking is a clever feature for a problem which angular does not have.
 
-True, but Angular's `$digest` loop is a clever solution for a problem that no other library has! In any case, Pete Hunt of [React.js](facebook.github.io/react/) fame [takes issue](http://www.reddit.com/r/javascript/comments/1oo1y8) with the notion that Angular's dirty checking is fast enough.
+True, but Angular's `$digest` loop is a clever solution for a problem that no other library has! In any case, Pete Hunt of [React.js](http://facebook.github.io/react/) fame [takes issue](http://www.reddit.com/r/javascript/comments/1oo1y8) with the notion that Angular's dirty checking is fast enough.
 
 A final important difference is in how your app is rendered. Traditional templating engines compile a string template to a function that, given some data, returns another string (which typically is `innerHTML`'d into the page). Angular (and also Knockout) work by traversing the DOM, reading attributes, and setting up bindings accordingly. Aside from the [FOUC](http://iarouse.com/blog/2013/10/30/angularjs-avoid-flash-of-unstyled-content-fouc/) that you then have to work around, this means that your page is peppered with non-validating gubbins like `ng-model`.
 
