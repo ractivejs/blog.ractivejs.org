@@ -1,1 +1,25 @@
 @import "../shared/scss/main";
+
+article {
+	.aside {
+		display: none;
+	}
+
+	@media (min-width: 50em) {
+		margin: 0 auto;
+
+		p, ul {
+			padding-right: 18em;
+		}
+
+		.aside {
+			display: block;
+		}
+	}
+}
+
+@import "header";
+@import "post";
+@import "preview";
+@import "aside";
+@import "quote";

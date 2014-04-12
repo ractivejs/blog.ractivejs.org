@@ -1,10 +1,28 @@
 .preview {
+	border-bottom: 2px solid #eee;
+	margin: 0 0 2em 0;
+
+	&:last-child {
+		border-bottom: none;
+	}
+
 	.poster {
 		width: 12em;
 		float: left;
 		margin: 0 1em 1em 0;
 	}
 
-	border-bottom: 2px solid #eee;
-	margin: 0 0 2em 0;
+	.post-header {
+		border-bottom: 1px solid #eee;
+		margin: 0 0 1em 0;
+		padding: 0 0 1em 0;
+
+		h1 {
+			font-size: 1.6em;
+		}
+
+		.meta {
+			margin: 0;
+		}
+	}
 }
