@@ -20,7 +20,7 @@ module.exports = function ( grunt ) {
 
 		// render index page
 		rendered = new Ractive({
-			template: grunt.file.read( 'templates/index.html' ),
+			template: grunt.template.process( grunt.file.read( 'templates/index.html' ) ),
 			data: {
 				recentPosts: postList.slice( 0, 5 )
 			},
@@ -46,7 +46,7 @@ module.exports = function ( grunt ) {
 		grunt.file.write( 'build/rss.xml', rendered );
 
 		// render individual posts
-		postTemplate = grunt.file.read( 'templates/post.html' );
+		postTemplate = grunt.template.process( grunt.file.read( 'templates/post.html' ) );
 
 		postList.forEach( function ( post ) {
 			var rendered, path, name;

@@ -2,7 +2,7 @@ module.exports = {
 	options: { style: 'compressed' },
 	main: {
 		files: {
-			'build/min.css': 'src/scss/main.scss'
+			'build/min.css': 'scss/main.scss'
 		}
 	}
 };
