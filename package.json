@@ -3,7 +3,6 @@
   "author": "Rich Harris",
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-contrib-sass": "~0.6.0",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-watch": "~0.5.3",
@@ -11,6 +10,7 @@
     "grunt-html-validation": "~0.1.13",
     "grunt-spelunk": "~0.1.0",
     "jit-grunt": "~0.4.1",
-    "ractive": "~0.4.0"
+    "ractive": "~0.4.0",
+    "grunt-sass": "~0.12.1"
   }
 }
