@@ -7,7 +7,8 @@ module.exports = function ( grunt ) {
 		'sass',
 		'copy',
 		'spelunk',
-		'render'
+		'render',
+		'validation'
 	]);
 
 };
