@@ -4,3 +4,4 @@ node_modules
 tmp
 build
 validation*.json
+workspace
