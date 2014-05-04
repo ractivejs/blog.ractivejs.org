@@ -1,4 +1,8 @@
 {
 	"date": "2014/01/02",
-	"title": "What's the difference between Angular and Ractive?"
+	"title": "What's the difference between Angular and Ractive?",
+	"poster": {
+		"src": "angular-v-ractive.png",
+		"type": "medium"
+	}
 }
