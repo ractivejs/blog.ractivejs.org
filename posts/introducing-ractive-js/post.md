@@ -170,7 +170,7 @@ So far, this all sounds fairly prosaic - handy, perhaps, but nothing you can't a
 But we're only getting started. While it's been used in production in several interactives, it's still an early-stage project which needs brave souls to try it out in projects and (if necessary!) submit bug reports. If you build something with it, we'd love to hear from you.
 
 <figure>
-	![Interactive data visualisations are much easier to create with Ractive.js - no DOM event handling, no state management, no labyrinthine render methods](../assets/images/animated-chart.jpg)
+	![Interactive data visualisations are much easier to create with Ractive.js - no DOM event handling, no state management, no labyrinthine render methods](../../assets/images/animated-chart.jpg)
 
 	<figcaption>
 		Interactive [data visualisations](http://examples.ractivejs.org/animated-chart) are much easier to create with Ractive.js - no DOM event handling, no state management, no labyrinthine render methods
