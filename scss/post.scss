@@ -28,6 +28,12 @@ figure {
 		padding: 0.2em 0;
 		font-size: 0.8em;
 	}
+
+	@media (min-width: 50em) {
+		&.type-medium {
+			padding-right: 18em;
+		}
+	}
 }
 
 figure.medium {
