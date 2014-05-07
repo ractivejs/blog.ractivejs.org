@@ -54,7 +54,7 @@ Moreover, because Ractive is *state-aware*, it can avoid doing unnecessary updat
 
 It turns out that this approach makes it really easy to do a whole suite of things—animations, SVG data visualisations, neater event handling, collecting user input, and so on.
 
-If these sound like things that could make your life easier then you can find all the [examples](http://examples.ractivejs.org), [tutorials](http://learn.ractivejs.org) and [documentation](https://github.com/Rich-Harris/Ractive/wiki) you need to get started—including the [60-second set-up](https://github.com/Rich-Harris/Ractive/wiki/60-second-setup) — via [ractivejs.org](http://ractivejs.org).
+If these sound like things that could make your life easier then you can find all the [examples](http://examples.ractivejs.org), [tutorials](http://learn.ractivejs.org) and [documentation](https://github.com/Rich-Harris/Ractive/wiki) you need to get started—including the [60-second set-up](http://www.ractivejs.org/60-second-setup) — via [ractivejs.org](http://www.ractivejs.org/).
 
 Ractive has been used to build a number of Guardian interactives, so even though development is still ongoing ([issues and pull requests](https://github.com/Rich-Harris/Ractive/issues) are always welcome!) it’s definitely production-ready. It’s been tested successfully in IE8+ and in all modern browsers.
 
@@ -62,4 +62,4 @@ If you build something with Ractive, we’d love to hear about it.
 
 ## Acknowledgment
 
-The development of Ractive.js was made possible, in part, by the [Bill &amp; Melinda Gates Foundation](http://www.gatesfoundation.org/)’s support for [Guardian Global development](theguardian.com/global-development/).
+The development of Ractive.js was made possible, in part, by the [Bill &amp; Melinda Gates Foundation](http://www.gatesfoundation.org/)’s support for [Guardian Global development](http://www.theguardian.com/global-development/).
