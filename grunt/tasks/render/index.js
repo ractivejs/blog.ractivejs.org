@@ -26,7 +26,8 @@ module.exports = function ( grunt ) {
 			},
 			delimiters: [ '[[', ']]' ],
 			tripleDelimiters: [ '[[[', ']]]' ],
-			preserveWhitespace: true
+			preserveWhitespace: true,
+			stripComments: false
 		}).toHTML();
 
 		grunt.file.write( 'build/index.html', rendered );
@@ -60,7 +61,8 @@ module.exports = function ( grunt ) {
 				},
 				delimiters: [ '[[', ']]' ],
 				tripleDelimiters: [ '[[[', ']]]' ],
-				preserveWhitespace: true
+				preserveWhitespace: true,
+				stripComments: false
 			}).toHTML();
 
 			grunt.file.write( path + '/index.html', rendered );
