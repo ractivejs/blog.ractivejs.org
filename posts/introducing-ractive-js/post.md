@@ -52,7 +52,7 @@ updateUsername(model.username);
 updateMsgCount(model.msgCount);
 ```
 
-Better, except that now we've added two extra `&lt;span&gt;` elements to the DOM. That means more work for the browser, which can become particularly noticeable on mobile devices. And we've got to traverse the DOM and store references to elements.
+Better, except that now we've added two extra `<span>` elements to the DOM. That means more work for the browser, which can become particularly noticeable on mobile devices. And we've got to traverse the DOM and store references to elements.
 
 ## 3. Templating
 
