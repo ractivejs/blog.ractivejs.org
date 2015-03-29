@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset=utf-8>
+	<meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Ractive.js - next-generation DOM manipulation</title>
+
+	<link rel=icon type=image/png href=favicon.png>
+
+	<link rel=stylesheet href=min.css>
+
+	<!--[if lte IE 8]>
+		<script src='assets/respond.min.js'></script>
+		<script src='assets/html5shiv.min.js'></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<nav>
+	<div class="nav-inner">
+		<a href="http://ractivejs.org">Ractive.js</a>
+
+		<ul>
+			<li><a href=http://ractivejs.org/60-second-setup>60 second setup</a></li>
+			<li><a href=http://learn.ractivejs.org>Tutorials</a></li>
+			<li><a href=http://examples.ractivejs.org>Examples</a></li>
+			<li><a href=http://docs.ractivejs.org>Docs</a></li>
+			<li><a href=http://docs.ractivejs.org/latest/plugins>Plugins</a></li>
+			<li class=selected><a href=http://blog.ractivejs.org>Blog</a></li>
+			<li class=github-small><a href=https://github.com/ractivejs/ractive>GitHub</a></li>
+		</ul>
+
+		<a class="github-wide" href="https://github.com/ractivejs/ractive">GitHub</a>
+
+		<button id="nav-toggle">&#9776;</button>
+	</div>
+</nav>
+
+
+	<header>
+		<h1>Ractive.js blog</h1>
+	</header>
+
+	<main>
+			<article class="preview">
+				<header class="post-header">
+					<h1><a class="stealth" href="posts/whats-the-difference-between-react-and-ractive">What's the difference between React and Ractive?</a></h1>
+					<p class="meta">6 May 2014 <span class="bullet">&bull;</span> <a href="posts/whats-the-difference-between-react-and-ractive#disqus_thread" data-disqus-identifier="whats-the-difference-between-react-and-ractive">Comments</a></p>
+				</header>
+					<a href="posts/whats-the-difference-between-react-and-ractive"><img alt="" class="poster" src="assets/images/react-v-ractive.png"></a>
+				
+					<p>The last post on this blog attempted to <a href="../whats-the-difference-between-angular-and-ractive">compare Ractive.js with Angular.js</a> &ndash; two very different projects with superficial similarities. This time, we&#39;ll be comparing Ractive with <a href="http://facebook.github.io/react">React.js</a>, which despite appearances is much closer to Ractive in terms of purpose and philosophy.</p>
+
+					<p class="continue"><a href="posts/whats-the-difference-between-react-and-ractive">Continue reading &raquo;</a></p>
+							</article>
+			<article class="preview">
+				<header class="post-header">
+					<h1><a class="stealth" href="posts/whats-the-difference-between-angular-and-ractive">What's the difference between Angular and Ractive?</a></h1>
+					<p class="meta">2 January 2014 <span class="bullet">&bull;</span> <a href="posts/whats-the-difference-between-angular-and-ractive#disqus_thread" data-disqus-identifier="whats-the-difference-between-angular-and-ractive">Comments</a></p>
+				</header>
+					<a href="posts/whats-the-difference-between-angular-and-ractive"><img alt="" class="poster" src="assets/images/angular-v-ractive.png"></a>
+				
+					<p>Lots of people have asked what the difference is between Ractive and other libraries and frameworks. It&#39;s long been my intention to write a series of articles attempting to answer, but I&#39;ve always put it off because a) I didn&#39;t have anywhere to post the articles, and b) I didn&#39;t feel qualified to compare Ractive to libraries that I&#39;m not particularly familiar with.</p>
+<p>Now that I&#39;ve got round to setting up this blog, a) is no longer an issue. As for b)... well, if I get stuff wrong, people will correct me &ndash; this is the Internet, after all. And I&#39;ll edit these posts as necessary to keep them accurate.</p>
+<p>I was going to begin the series by comparing Ractive to <a href="http://facebook.github.io/react/">React.js</a>, which in my view is one of the more interesting JavaScript libraries of 2013. It has lots of philosophical similarities to Ractive, but also some stark differences. It should be an interesting study.</p>
+<p>But the question I&#39;ve had more frequently &ndash; and <a href="http://stackoverflow.com/questions/20893066/differences-between-ractivejs-and-angularjs">most recently</a> &ndash; is how Ractive compares to <a href="http://angularjs.org/">Angular</a>. So I&#39;m going to start there.</p>
+
+					<p class="continue"><a href="posts/whats-the-difference-between-angular-and-ractive">Continue reading &raquo;</a></p>
+							</article>
+			<article class="preview">
+				<header class="post-header">
+					<h1><a class="stealth" href="posts/ractive-js-expressions-and-the-new-wave-of-reactive-programming">Ractive.js expressions and the new wave of reactive programming</a></h1>
+					<p class="meta">1 January 2014 <span class="bullet">&bull;</span> <a href="posts/ractive-js-expressions-and-the-new-wave-of-reactive-programming#disqus_thread" data-disqus-identifier="ractive-js-expressions-and-the-new-wave-of-reactive-programming">Comments</a></p>
+				</header>
+				
+					<p><em>Originally posted at <a href="http://flippinawesome.org/2013/08/19/ractive-js-expressions-and-the-new-wave-of-reactive-programming/">flippinawesome.org</a></em></p>
+<p>Dedicated followers of JavaScript fashion will by now have noticed this season’s hot new trend. If you haven’t spotted it yet, here are a few projects sporting this style on the GitHub catwalk – <a href="http://facebook.github.io/react/">React</a>, <a href="https://github.com/mattbaker/Reactive.js">Reactive.js</a>, <a href="https://github.com/component/reactive">component/reactive</a> and <a href="https://github.com/yang/reactive-coffee">reactive.coffee</a>.</p>
+<p>That’s right: <em>reactive programming</em> is the new black.</p>
+<p>At a high level, the idea behind reactive programming is that changes in state propagate throughout a system. Put crudely, this means that in a reactive system where <code>a = b * 2</code>, whenever the value of <code>b</code> changes, the value of <code>a</code> will also change, rather than forever being equal to whatever <code>b * 2</code> was at the time of the statement.</p>
+<p>When we take this idea and apply it to user interfaces, we eliminate the DOM manipulation drudgery that dominates web developers’ lives.</p>
+
+					<p class="continue"><a href="posts/ractive-js-expressions-and-the-new-wave-of-reactive-programming">Continue reading &raquo;</a></p>
+							</article>
+			<article class="preview">
+				<header class="post-header">
+					<h1><a class="stealth" href="posts/the-origins-of-ractive">The origins of Ractive</a></h1>
+					<p class="meta">31 December 2013 <span class="bullet">&bull;</span> <a href="posts/the-origins-of-ractive#disqus_thread" data-disqus-identifier="the-origins-of-ractive">Comments</a></p>
+				</header>
+				
+					<p><em>Originally posted on <a href="http://source.opennews.org/en-US/articles/introducing-ractivejs/">Source</a>, the blog for newsroom developers and hacker-journalists</em></p>
+<p>Making interactives is hard. You have to:</p>
+<ul>
+<li>figure out the story</li>
+<li>find some data (possibly) and clean it/transform it (almost certainly)</li>
+<li>design a user interface</li>
+<li>mark it up with HTML</li>
+<li>style it with CSS</li>
+<li>make it dance with JavaScript</li>
+<li>test it in different browsers and on mobile devices</li>
+<li>deploy it</li>
+<li>fix all the bugs you missed</li>
+<li>deploy it again</li>
+</ul>
+<p>...and you have to do all that against deadlines that would make most developers wince. And yet here’s the thing: in many newsrooms, the people building these interactive stories — and in so doing figuring out the rules of a <a href="https://vimeo.com/67076984">fundamentally new form of media</a> — are not experienced developers.</p>
+<p>They’re journalist-hackers and lone crusaders, fighting for the future of news against (in some cases) bureaucratic overlords who still think video on the web is the next big thing. And they—we—deserve better weapons for the fight.</p>
+
+					<p class="continue"><a href="posts/the-origins-of-ractive">Continue reading &raquo;</a></p>
+							</article>
+			<article class="preview">
+				<header class="post-header">
+					<h1><a class="stealth" href="posts/introducing-ractive-js">Introducing Ractive.js</a></h1>
+					<p class="meta">30 December 2013 <span class="bullet">&bull;</span> <a href="posts/introducing-ractive-js#disqus_thread" data-disqus-identifier="introducing-ractive-js">Comments</a></p>
+				</header>
+					<a href="posts/introducing-ractive-js"><img alt="Ractive.js is used to create guardian.co.uk interactives, such as '<a href='http://www.theguardian.com/global-development/interactive/2013/jun/07/food-game-what-do-you-know'>Food game: How well do you know the world?</a>'" class="poster" src="assets/images/foodgame.jpg"></a>
+				
+					<p><em>Originally posted on the <a href="http://www.theguardian.com/info/developer-blog/2013/jul/24/ractive-js-next-generation-dom-manipulation">Guardian developer blog</a></em></p>
+<p>Anyone with fond memories of the <a href="http://www.youtube.com/watch?v=gsNaR6FRuO0">sound of dial-up internet</a> will understand how ridiculous it would have seemed, to the web&#39;s pioneers, that we would one day be using this geeky information exchange format to play games, do grocery shopping, collaborate on spreadsheets and even <a href="https://c9.io/">build more webapps</a>. Yet here we are.</p>
+<p>But despite taking over the world, the web has a dirty secret: it&#39;s actually a lousy platform for creating many of the experiences we take for granted. Let me qualify that: it&#39;s an amazing technology for creating <em>documents</em>, but for creating <em>apps</em> &ndash; interactive experiences that respond to user input, and represent changing data &ndash; web development can be akin to pulling teeth.</p>
+
+					<p class="continue"><a href="posts/introducing-ractive-js">Continue reading &raquo;</a></p>
+							</article>
+	</main>
+
+	<footer>
+	<p>Ractive.js is a free and open source project released under the MIT license.</p>
+</footer>
+
+
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-5602942-5', 'ractivejs.org');
+	ga('send', 'pageview');
+</script>
+
+
+	<script>
+		// Disqus
+		var disqus_shortname = 'ractivejs'; // required: replace example with your forum shortname
+
+		/* * * DON'T EDIT BELOW THIS LINE * * */
+		(function () {
+		var s = document.createElement('script'); s.async = true;
+		s.type = 'text/javascript';
+		s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+		(document.head || document.body).appendChild(s);
+		}());
+	</script>
+
+	<script src="assets/prettify.js"></script>
+	<script>
+		prettyPrint();
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>Ractive.js expressions and the new wave of reactive programming | Blog | Ractive.js</title>
+
+	<link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+	<link rel="stylesheet" href="../../min.css">
+
+	<!--[if lte IE 8]>
+		<script src='../../assets/respond.min.js'></script>
+		<script src='../../assets/html5shiv.min.js'></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<nav>
+	<div class="nav-inner">
+		<a href="http://ractivejs.org">Ractive.js</a>
+
+		<ul>
+			<li><a href=http://ractivejs.org/60-second-setup>60 second setup</a></li>
+			<li><a href=http://learn.ractivejs.org>Tutorials</a></li>
+			<li><a href=http://examples.ractivejs.org>Examples</a></li>
+			<li><a href=http://docs.ractivejs.org>Docs</a></li>
+			<li><a href=http://docs.ractivejs.org/latest/plugins>Plugins</a></li>
+			<li class=selected><a href=http://blog.ractivejs.org>Blog</a></li>
+			<li class=github-small><a href=https://github.com/ractivejs/ractive>GitHub</a></li>
+		</ul>
+
+		<a class="github-wide" href="https://github.com/ractivejs/ractive">GitHub</a>
+
+		<button id="nav-toggle">&#9776;</button>
+	</div>
+</nav>
+		<header class="post-header">
+			<h1>Ractive.js expressions and the new wave of reactive programming</h1>
+			<p class="meta">
+				<a href="http://twitter.com/Rich_Harris">Rich Harris</a>
+				
+				<span class="bullet">&bull;</span> 1 January 2014 <span class="bullet">&bull;</span> <a href="#disqus_thread" data-disqus-identifier="ractive-js-expressions-and-the-new-wave-of-reactive-programming">Comments</a>
+			</p>
+		</header>
+
+		<main>
+			<article class="post">
+				<p><em>Originally posted at <a href="http://flippinawesome.org/2013/08/19/ractive-js-expressions-and-the-new-wave-of-reactive-programming/">flippinawesome.org</a></em></p>
+<p>Dedicated followers of JavaScript fashion will by now have noticed this season’s hot new trend. If you haven’t spotted it yet, here are a few projects sporting this style on the GitHub catwalk – <a href="http://facebook.github.io/react/">React</a>, <a href="https://github.com/mattbaker/Reactive.js">Reactive.js</a>, <a href="https://github.com/component/reactive">component/reactive</a> and <a href="https://github.com/yang/reactive-coffee">reactive.coffee</a>.</p>
+<p>That’s right: <em>reactive programming</em> is the new black.</p>
+<p>At a high level, the idea behind reactive programming is that changes in state propagate throughout a system. Put crudely, this means that in a reactive system where <code>a = b * 2</code>, whenever the value of <code>b</code> changes, the value of <code>a</code> will also change, rather than forever being equal to whatever <code>b * 2</code> was at the time of the statement.</p>
+<p>When we take this idea and apply it to user interfaces, we eliminate the DOM manipulation drudgery that dominates web developers’ lives.</p>
+<p><a href="http://ractivejs.org">Ractive.js</a> is a new library initially developed to create interactive (hence the name – not to be confused with Reactive.js!) news applications at <a href="http://theguardian.com">theguardian.com</a>. It is designed to dramatically reduce the effort involved in creating web apps by embracing these principles.</p>
+<p>Let’s look at a simple example:</p>
+<pre class="prettyprint lang-js">// We create a new ractive, which renders the following to a container element:
+// &lt;p&gt;Hello, Dave! You have 4 tasks remaining.&lt;/p&gt;
+
+var ractive = new Ractive({
+  el: container,
+  template: '&lt;p&gt;Hello, {{name}}! You have {{tasks.incomplete}} tasks remaining.&lt;/p&gt;',
+  data: { name: 'Dave', tasks: { incomplete: 4, total: 11 } }
+});
+
+// Later we get some new data:
+ractive.set( 'tasks', { incomplete: 5, total: 12 });
+
+// The ractive reacts accordingly, surgically updating the part of the DOM that is
+// now out of date:
+// &lt;p&gt;Hello, Dave! You have 5 tasks remaining.&lt;/p&gt;</pre>
+
+<p>Rather than doing any kind of polling or brute-force ‘dirty checking,’ this uses an elegant dependency tracking system: the text node containing the number of incomplete tasks depends on the <code>tasks.incomplete</code> <em>keypath</em>, which is a child of the <code>tasks</code> keypath. So when we update <code>tasks</code>, we know that we need to check to see if <code>tasks.incomplete</code> has changed – but we don’t need to bother checking <code>tasks.total</code>, because nothing depends on that keypath.</p>
+<p>As applications grow in complexity, this means much less work for the developer. You might think it sounds like more work for the browser, but it’s not. The non-reactive way to do interactive UI typically involves re-rendering views regardless of whether they’ve changed, and replacing chunks of perfectly good DOM (why hello, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management">garbage collector</a>), which is typically much less efficient.</p>
+<p>In other words, reactive UI is a win-win – better for performance, and better for your sanity.</p>
+<h2 id="the-secret-sauce-expressions">The secret sauce: expressions</h2>
+<p>This article won’t go any further into the basics of what Ractive does or why we built it – if you’re interested, you can <a href="http://learn.ractivejs.org">follow the interactive tutorials</a> or <a href="http://theguardian.com/info/developer-blog/2013/jul/24/ractive-js-next-generation-dom-manipulation">read the introductory blog post</a>. Instead, we’re going to focus on one of the features that helps Ractive stand out from its peers, namely <em>expressions</em>.</p>
+<p>Expressions allow you to take the logic that only your interface cares about, and put it in your template <em>where it belongs</em>. Yes, I just said that! If you’ve ever had to debug badly written PHP (for example), you may well shudder at the suggestion that logic belongs in templates. But while it’s true that <em>business logic</em> doesn’t belong in your templates, it’s equally true that a lot of <em>presentation logic</em> – aka ‘data massaging’ – doesn’t really belong in your code.</p>
+<aside>
+    <div class='aside-inner'>
+        <p>If you still need convincing, here’s a couple of good articles on the subject: <a href="http://www.ebaytechblog.com/2012/10/01/the-case-against-logic-less-templates/">The Case Against Logic-less Templates</a> and <a href="http://boronine.com/2012/09/07/Cult-Of-Logic-less-Templates/">Cult of Logic-Less Templates</a>.)</p>
+    </div>
+</aside>
+
+<p>Let’s take our initial example and turn it into a basic todo app along the lines of <a href="http://todomvc.com">TodoMVC</a>. Our template looks like this – ignore the question marks for now:</p>
+<pre class="prettyprint lang-html">&lt;p&gt;Hello, {{name}}! You have ??? tasks remaining.&lt;/p&gt;
+
+&lt;ul&gt;
+{{#tasks :i}}
+  &lt;li class='task'&gt;{{i}}: {{description}}&lt;/li&gt;
+{{/tasks}}
+&lt;/ul&gt;</pre>
+
+<p>Meanwhile our <em>model</em>, if you want to use MVC terminology, is a simple array of objects representing tasks:</p>
+<pre class="prettyprint lang-js">tasks = [
+  { completed: true,  description: 'Add a task' },
+  { completed: false, description: 'Add some more tasks' }.
+  { completed: false, description: 'Solve P = NP' }
+];
+
+ractive = new Ractive({
+  el: container,
+  template: template,
+  data: { name: 'Dave', tasks: tasks }
+});</pre>
+
+<p>This renders the following:</p>
+<pre class="prettyprint lang-html">&lt;p&gt;Hello, Dave! You have ??? tasks remaining.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li class='task'&gt;0: Add a task&lt;/li&gt;
+  &lt;li class='task'&gt;1: Add some more tasks&lt;/li&gt;
+  &lt;li class='task'&gt;2: Solve P = NP&lt;/li&gt;
+&lt;/ul&gt;</pre>
+
+<p>This time, there’s no <code>tasks.incomplete</code> property, because <code>tasks</code> is an array. We’ll come back to that. The first job is to rejig the numbers so that it starts at 1, because lists starting with 0 only make sense to programmers. Doing so is trivial:</p>
+<pre class="prettyprint lang-html">&lt;li class='task'&gt;{{i+1}}: {{description}}&lt;/li&gt;</pre>
+
+<p>Next, let’s add a <code>complete</code> class to any completed task:</p>
+<pre class="prettyprint lang-html">&lt;li class='task {{ completed ? "complete" : "pending" }}'&gt;{{i+1}}: {{description}}&lt;/li&gt;</pre>
+
+<p>Now, our rendered task list looks like this:</p>
+<pre class="prettyprint lang-html">&lt;p&gt;Hello, Dave! You have ??? tasks remaining.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li class='task complete'&gt;1: Add a task&lt;/li&gt;
+  &lt;li class='task pending'&gt;2: Add some more tasks&lt;/li&gt;
+  &lt;li class='task pending'&gt;3: Solve P = NP&lt;/li&gt;
+&lt;/ul&gt;</pre>
+
+<p>Now, let’s deal with those question marks. One way – the traditional way – would be to keep track of the incomplete count as a separate value in our model (or viewmodel, depending on which tribe you belong to), and update it every time the task list changed. The trouble with that is you have to add the necessary logic to every bit of your app that can change the model in some way – a toggle on each task, a ‘mark all as complete’ button, the code that reads from the server (or local storage), or whatever else gets added in future. It doesn’t scale.</p>
+<p>A better way is to have the template react to changes by calling any necessary logic <em>when it needs to</em>:</p>
+<pre class="prettyprint lang-html">&lt;p&gt;Hello, Dave! You have {{ tasks.filter( incomplete ).length }} tasks remaining.&lt;/p&gt;</pre>
+
+<p>Then, we just need to add an <code>incomplete</code> filter to our model:</p>
+<pre class="prettyprint lang-js">ractive = new Ractive({
+  el: container,
+  template: template,
+  data: {
+    name: 'Dave',
+    tasks: tasks,
+    incomplete: function ( item ) {
+      return !item.completed;
+    }
+  }
+});</pre>
+
+<p>Now, whenever <code>tasks</code> changes – whether because we’ve added a new one, or changed the status of one or more tasks, or whatever – the expression will be re-evaluated. If the number of incomplete tasks has changed, the DOM will be updated.</p>
+<p>As our app becomes more complex, this approach scales beautifully, saving us from a convoluted observing/massaging/updating of our data.</p>
+<aside>
+    <div class='aside-inner'>
+        <p>You can see a <a href="http://todomvc.com/labs/architecture-examples/ractive/">fully fleshed out TodoMVC implementation here</a> – (the <a href="https://github.com/tastejs/todomvc/tree/gh-pages/labs/architecture-examples/ractive">source code</a> is possibly the shortest of any implementation, and arguably some of the most readable).</p>
+    </div>
+</aside>
+
+<p>It also allows us to do things like <a href="http://examples.ractivejs.org/animated-chart">sophisticated animations</a>, without reams of complex render logic.</p>
+<h2 id="how-does-it-work-">How does it work?</h2>
+<p>Traditional templating engines work by <em>interpolating strings</em>, the result of which is typically rendered using <code>innerHTML</code>. Ractive is different – it parses templates into a tree-like JSON structure which contains the DNA of the app, using a <a href="http://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG-style parser</a>. When it encounters an expression, the parser first creates an <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">abstract syntax tree</a> representation of it, then extracts the <em>references</em> from the AST, then collapses it down to a string representation.</p>
+<pre class="prettyprint lang-js">Ractive.parse( '{{i+1}}' );
+
+// results in the following &ndash; it's deliberately terse, so that
+// you can parse on the server and send the result to browsers
+// without wasting bytes:
+// {
+//   t: 2,          // the type of mustache
+//   x: {           // the expression
+//     r: [ "i" ],  // the references used in the expression
+//     s: "${0}+1"  // a reference-agnostic string representation
+//   }
+// }</pre>
+
+<p>Later, when Ractive renders this mustache, it will try to <em>resolve the references</em> used in the expression. In this example, there’s only one reference – <code>i</code> – which resolves to <code>0</code> for the first task, then <code>1</code>, then <code>2</code> and so on. Ractive creates a function – using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function constructor</a> – that takes the value of <code>i</code> as an argument and returns <code>i+1</code>.</p>
+<p>This might seem like a roundabout way to add 1 to something. But because we only need to create the function once, rather than repeatedly <code>eval</code>ing code (which is slow), it’s a memory-efficient and performant way to solve the problem even when dealing with hundreds of tasks.</p>
+<p>And because we know which references are involved, we know when to call the function again. Consider the next expression:</p>
+<pre class="prettyprint lang-js">Ractive.parse( '{{ completed ? "complete" : "pending" }}' );
+
+// {
+//   t: 2,
+//   x: {
+//     r: [ "completed" ],
+//     s: "${0}?'complete':'pending'"
+//   }
+// }</pre>
+
+<p>For the first task, the <code>completed</code> reference resolves to the keypath <code>tasks.0.completed</code> – for the second, <code>tasks.1.completed</code> and so on. In each case, Ractive <em>registers the mustache</em> as a <em>dependant</em> of the keypath, so that when <code>tasks.0.completed</code> changes (again, it doesn’t matter what happened to cause it to change – that’s the beauty of reactive programming), the expression is re-evaluated and the DOM is updated.</p>
+<h2 id="so-is-it-real-javascript-">So is it ‘real JavaScript’?</h2>
+<p>Up to a point. Since in a reactive system we don’t have control over when the expression is evaluated, it’s important that expressions don’t have <em>side effects</em> – so if we try to use assignment operators such as <code>foo = bar</code> or <code>foo += 1</code>, the parser will fail. The same goes for certain keywords, such as <code>new</code>, <code>delete</code> and <code>function</code>.</p>
+<p>Of course, it’s still possible to create side-effects by referencing a function which itself has side-effects. Remember our <code>incomplete</code> filter? There’s nothing to stop you doing this:</p>
+<pre class="prettyprint lang-js">ractive = new Ractive({
+  el: container,
+  template: template,
+  data: {
+    name: 'Dave',
+    tasks: tasks,
+    incomplete: function ( item ) {
+      doSomeExpensiveComputation();
+      counter += 1;
+      return !item.completed;
+    }
+  }
+});</pre>
+
+<p>But by parsing expressions and blocking ‘accidental’ side-effects, we can encourage best practices without preventing power users from manipulating the system to their own ends.</p>
+<h2 id="the-future">The future</h2>
+<p>Expect to see more examples of the reactive programming trend coming to a repository near you. As with all programming paradigms, it’s not a silver bullet, but by integrating reactive thinking into our work we can start to structure our applications in a way that is more readable and (often) more efficient.</p>
+<p><a href="http://ractivejs.org">Ractive.js</a> is under active development – it’s production-ready (to get started, <a href="https://github.com/RactiveJS/Ractive/wiki/60-second-setup">try the 60 second setup</a> or <a href="http://learn.ractivejs.org">follow the interactive tutorials</a>), but will continue to evolve as we collectively figure out the secrets of reactive programming. If you’re interested in being part of that conversation, <a href="https://github.com/RactiveJS/Ractive">come on over to GitHub</a> and help shape the future of web development.</p>
+
+
+			</article>
+
+			<section class="comments">
+				<div id="disqus_thread"></div>
+				<noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+				<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class=logo-disqus>Disqus</span></a>
+			</section>
+		</main>
+	<footer>
+	<p>Ractive.js is a free and open source project released under the MIT license.</p>
+</footer>
+
+
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-5602942-5', 'ractivejs.org');
+	ga('send', 'pageview');
+</script>
+
+
+
+	<script>
+		// Disqus
+		var disqus_shortname = 'ractivejs';
+		var disqus_identifier = 'ractive-js-expressions-and-the-new-wave-of-reactive-programming';
+		var disqus_url = 'http://blog.ractivejs.org/posts/ractive-js-expressions-and-the-new-wave-of-reactive-programming';
+
+		(function() {
+		    var s = function (url) {
+		    	var scr = document.createElement('script'); scr.type = 'text/javascript'; scr.async = true;
+		    	scr.src = url;
+		    	(document.head || document.body).appendChild(scr);
+		    };
+		    s('//ractivejs.disqus.com/embed.js');
+		    s('//ractivejs.disqus.com/count.js');
+		})();
+	</script>
+
+	<script src="../../assets/prettify.js"></script>
+	<script>
+		prettyPrint();
+	</script>
+	</body>
+</html>

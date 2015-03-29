@@ -1,0 +1,454 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<rss version='2.0'>
+<channel>
+	<title>Ractive.js blog</title>
+	<description>News and articles about Ractive.js</description>
+	<link>http://blog.ractivejs.org</link>
+
+	<item>
+	<title>What's the difference between React and Ractive?</title>
+	<description><p>The last post on this blog attempted to <a href="../whats-the-difference-between-angular-and-ractive">compare Ractive.js with Angular.js</a> &#8211; two very different projects with superficial similarities. This time, we&#39;ll be comparing Ractive with <a href="http://facebook.github.io/react">React.js</a>, which despite appearances is much closer to Ractive in terms of purpose and philosophy.</p>
+<h2 id="what-is-react-">What is React?</h2>
+<p>The <a href="http://facebook.github.io/react">project homepage</a> calls React &#39;a JavaScript library for building user interfaces&#39;, and goes on to describe it as &#39;the V in MVC&#39;. In other words, it has one job &#8211; taking your application state and turning it into a <em>view</em> that can be displayed to the user. This focus separates it from frameworks like Angular and Ember.js, which handle things like routing, and communicating with a server, and myriad other concerns in addition to managing views.</p>
+<p>What&#39;s really interesting about React is <em>how</em> it does its job. As Chris Granger <a href="https://twitter.com/ibdknox/status/413363120862535680">describes it</a>, React is &#39;the <a href="http://en.wikipedia.org/wiki/Immediate_mode">immediate mode</a> abstraction over the <a href="http://en.wikipedia.org/wiki/Retained_mode">retained mode</a> DOM&#39;. Rather than describing what changes are required to bring the view up to date, you describe <em>what the view should look like</em>. Under the hood, React uses <a href="http://calendar.perfplanet.com/2013/diff/">smart algorithms</a> to &#39;diff&#39; that description with the current state of the DOM, then tells the browser what it needs to do.</p>
+<h2 id="the-similarities-between-ractive-and-react">The similarities between Ractive and React</h2>
+<p>React&#39;s first public release came about a month before Ractive&#39;s. I distinctly remember reading <a href="https://news.ycombinator.com/item?id=5789055">the post on Hacker News</a> and thinking &#39;well I may as well give up&#39; &#8211; so many of Ractive&#39;s ideas, which a day earlier had seemed entirely novel, had already been implemented by a team of engineers with the might of Facebook behind them.</p>
+<p>The most striking similarity was the use of a <em>virtual DOM</em>. Like Ractive, React had discovered that creating an abstract representation of the DOM allows for lightning-fast operations by minimising the amount of DOM manipulation (the bottleneck in most webapps) that needs to take place. It also facilitates server-side rendering without some of the <a href="http://www.yearofmoo.com/2012/11/angularjs-and-seo.html">crazy hacks</a> users of other tools have had to employ.</p>
+<p>Another was the focus on <em>reactive programming</em>. This is one of those phrases that threatens to become meaningless with overuse, but it&#39;s a useful concept. Put simply, in a reactive system where the value of <code>b</code> depends on the value of <code>a</code>, if <code>a</code> changes then <code>b</code> will also change. Applied to user interfaces, that means that when your application state changes, your view also changes. With traditional MVC libraries you typically have to implement all your render logic manually and wire it up with a web of publish/subscribe events; with React and Ractive you&#39;re spared that (tedious, error-prone, hard-to-optimise) step when building your apps.</p>
+<p>Finally, both libraries believe that the way to help developers build complex apps is to give them tools that encourage <em>simplicity</em> and <em>composability</em> and then get out of their way.</p>
+<p>Having said all that, there are also some stark differences.</p>
+<h2 id="templating">Templating</h2>
+<p>The most obvious way in which the two libraries differ is that Ractive wholly embraces templating &#8211; specifically, views are described using a variant of <a href="mustache.github.com">Mustache</a>, extended to include inline JavaScript expressions. Support for other languages is on the roadmap.</p>
+<aside>
+    <div class='aside-inner'>
+        <p>The logic-less template cultists would have you believe that allowing expressions in templates is a Bad Thing. <a href="http://www.boronine.com/2012/09/07/Cult-Of-Logic-less-Templates/">They&#39;re wrong</a>. <a href="../ractive-js-expressions-and-the-new-wave-of-reactive-programming/">Here&#39;s why</a>.</p>
+    </div>
+</aside>
+
+<p>React doesn&#39;t use templating. Instead, you describe your view by calling functions like <code>React.DOM.div(props, children)</code>.</p>
+<p>This is, it must be said, a totally brilliant idea. It means that your view code is subject to the same rules as the rest of your app &#8211; it gets linted, analysed and optimised with everything else, and allows you to (for example) use functional programming techniques.</p>
+<p>But personally, I still prefer templates. Manipulating markup, rather than code, brings you closer to the final rendered UI, and (in general) allows you to express the same ideas more concisely. The striking thing about markup is that it&#39;s as easy to read as to write, which is a huge productivity boon when working in a team. HTML is generally the first thing new web developers learn, and it is so pervasive in web dev culture (manifested in a million ways, from the vast quantities of high quality learning and reference materials to that fact that every text editor supports HTML syntax highlighting out of the box), that embracing HTML means embracing the entire skill spectrum of the web developer community.</p>
+<p>As someone who <a href="../the-origins-of-ractive">learned to code in a newsroom</a>, and works alongside others walking the same path, I believe that creating tools that beginners can use, as well as experts, is our most urgent task.</p>
+<h2 id="change-tracking">Change tracking</h2>
+<p>React re-renders the entire app on each state change, and diffs the result. Ractive, on the other hand, implements a change tracking mechanism, so only a subset of the virtual DOM gets notified of any change.</p>
+<p>There&#39;s no right answer to the question &#39;which approach is better?&#39;. Ractive&#39;s more conservative approach is often faster &#8211; as you&#39;d expect, because there&#39;s generally less work to do &#8211; but React&#39;s is undoubtedly <em>simpler</em>, in the sense of that word <a href="http://www.infoq.com/presentations/Simple-Made-Easy">as used by Clojure author Rich Hickey</a>. (The Clojure community appears to have had a profound influence on React&#39;s design, as evidenced by its popularity among prominent ClojureScript developers such as <a href="https://twitter.com/swannodette">David Nolen</a>, the author of <a href="https://github.com/swannodette/om">Om</a>, and the aforementioned Chris Granger who created <a href="http://www.lighttable.com/">Light Table</a>.)</p>
+<p>One point is worth noting however. Unlike just about every other data-binding tool (except Angular, which does something totally different), Ractive doesn&#39;t require you to wrap your data up in some library-specific observable class (e.g. <code>ko.observable()</code> or <code>Backbone.Model()</code>) &#8211; a requirement that React developers criticise, not without justification. Instead, it uses an approach based on <a href="http://docs.ractivejs.org/latest/keypaths">keypaths</a>, which means you can use plain old JavaScript objects (though you certainly can use observables, with the use of <a href="http://docs.ractivejs.org/latest/adaptors">adaptors</a>, if that&#39;s how your app is built).</p>
+<h2 id="two-way-binding">Two-way binding</h2>
+<p>Most data-binding tools implement some form of <em>two-way binding</em>, where user interaction &#8211; such as text entry in an <code>&#60;input&#62;</code> element, or toggling a checkbox &#8211; causes the application state to be updated. Implementing this manually is often finicky and requires the developer to be aware of various browser inconsistencies, and so robust two-way binding support is a real timesaver.</p>
+<p>React rejects this. In the React world, data flows one way &#8211; from parent to child &#8211; and two-way binding is seen as a source of bugs and confusion since (<a href="https://twitter.com/asolove/status/459391361310269441">its detractors say</a>) there&#39;s no longer a &#39;single source of truth&#39; (SSOT).</p>
+<p>Done correctly, two-way binding doesn&#39;t violate SSOT at all &#8211; it simply means that the <code>&#60;input&#62;</code> automatically <em>requests</em> changes to the SSOT without each developer having to write bothersome (and possibly incorrect!) boilerplate code. In my experience, two-way binding is a huge productivity win.</p>
+<p>Having said that, particularly complex interactions between Ractive components <em>have</em> been a source of bugs in the past. Our test suite will guard against those bugs reappearing, but it&#39;s fair to say that my life would have been easier for a couple of weeks earlier this year had two-way binding never been possible in Ractive.</p>
+<p>Would we design the library differently now? No &#8211; I believe that solving these hard problems on developers&#39; behalf is exactly what a library like Ractive is for.</p>
+<h2 id="where-react-shines">Where React shines</h2>
+<p>It&#39;s only fair to point out that React is <em>extremely</em> well battle-tested, having been used at <a href="http://facebook.com">facebook.com</a> (you may have heard of it?) for some time. If it&#39;s good enough for them (where &#39;good&#39; is defined as performant, testable, maintainable and so on) then it&#39;s almost certainly good enough for the rest of us.</p>
+<p>The React community is smart and passionate. Not just smart &#8211; <em>wise</em>. The attention to code quality is obvious. Online and in real life, React people are thoughtful, interesting and kind: these things matter.</p>
+<p>React beats Ractive on <em>clarity of vision</em>. When you hear React people talk, it&#39;s obvious that it wasn&#39;t created as a slightly-better version of what already existed; it&#39;s an implementation of ideas that are simultaneously ancient (in programming terms) and radical. Ractive, on the other hand, grew <em>into</em> its philosophy, from a starting point of &#39;here are some tasks that are way harder than they ought to be&#39;.</p>
+<p>In short, I&#39;d recommend React as the best way to build user interfaces, if Ractive didn&#39;t exist!</p>
+<h2 id="where-ractive-shines">Where Ractive shines</h2>
+<p>For starters, you can <a href="http://www.ractivejs.org/60-second-setup">learn Ractive in 60 seconds</a>. If you know HTML and the basics of Mustache (which itself has almost zero learning curve), then all you need to learn is the <code>ractive.set()</code> method and you&#39;re already most of the way there. People of all levels of experience &#39;get&#39; Ractive very quickly, because there are so few concepts to learn.</p>
+<p>Because of Ractive&#39;s newsroom heritage, it has always prioritised certain features that make it easy to build UIs that are <em>slick</em> &#8211; declarative transitions, animations, and first-class SVG support. A Ractive component can include CSS in its definition, which is encapsulated by default (i.e. component styles don&#39;t leak into the page). These are tricky problems that other libraries have, for the most part, yet to solve well, if at all.</p>
+<p>Like React, Ractive&#39;s community is awesome. I&#39;m constantly amazed and humbled by people&#39;s readiness to help each other with creative solutions to tricky problems, and then to work on baking those solutions into the library. I&#39;m truly excited to see how Ractive develops, because the direction is so heavily driven by real-world problem solving that it&#39;s impossible to predict what will happen next.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>And I&#39;m excited to see where React goes too. I hope the respect I have for the library and its developers is apparent in this post: it really is a great tool.</p>
+<p>So which should you use? Try both. It&#39;s an interesting time to be in this space because there are so many competing ideas; if we want the best ones to win, they each need to go under the microscope.</p>
+</description>
+	<link>http://blog.ractivejs.org/posts/whats-the-difference-between-react-and-ractive</link>
+	<guid>whats-the-difference-between-react-and-ractive</guid>
+	<pubDate>Tue, 06 May 2014 12:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>What's the difference between Angular and Ractive?</title>
+	<description><p>Lots of people have asked what the difference is between Ractive and other libraries and frameworks. It&#39;s long been my intention to write a series of articles attempting to answer, but I&#39;ve always put it off because a) I didn&#39;t have anywhere to post the articles, and b) I didn&#39;t feel qualified to compare Ractive to libraries that I&#39;m not particularly familiar with.</p>
+<p>Now that I&#39;ve got round to setting up this blog, a) is no longer an issue. As for b)... well, if I get stuff wrong, people will correct me &#8211; this is the Internet, after all. And I&#39;ll edit these posts as necessary to keep them accurate.</p>
+<p>I was going to begin the series by comparing Ractive to <a href="http://facebook.github.io/react/">React.js</a>, which in my view is one of the more interesting JavaScript libraries of 2013. It has lots of philosophical similarities to Ractive, but also some stark differences. It should be an interesting study.</p>
+<p>But the question I&#39;ve had more frequently &#8211; and <a href="http://stackoverflow.com/questions/20893066/differences-between-ractivejs-and-angularjs">most recently</a> &#8211; is how Ractive compares to <a href="http://angularjs.org/">Angular</a>. So I&#39;m going to start there.</p>
+<h2 id="what-is-angular-">What is Angular?</h2>
+<p>You&#39;re kidding, right? Angular is a wildly successful project. Its <a href="https://github.com/angular/angular.js">GitHub repo</a> has 18,579 stargazers (at the time of writing) &#8211; almost ten times Ractive&#39;s 1,950. Their <a href="http://twitter.com/angularjs">twitter account</a> has 28,629 followers, and there are hundreds if not thousands of <a href="http://builtwith.angularjs.org/">Angular apps</a> in the wild. Most days, an article or video or tutorial about Angular will show up on the Hacker News front page if not on dozens of other front end blogs.</p>
+<aside>
+    <div class='aside-inner'>
+        <p><a href='../../assets/images/anglebars.jpg'><img src='../../assets/images/anglebars.jpg' style='width: 5em; float: right; margin: 0 0 1em 1em'></img></a>Fun fact! Way back in the mists of time, Ractive was called Anglebars &#8211; because it was kind of halfway between Angular and Handlebars. I even ripped off the logo. In other words, Angular was a big inspiration for Ractive.</p>
+    </div>
+</aside>
+
+<p>It is, by any measure, an impressive showing. And it&#39;s built and maintained by the geniuses at Google, several of whom work on it full time. Ractive, by contrast, has one core contributor &#8211; yours truly (though it has an excellent community which has made it immeasurably better) &#8211; and is the product of unpaid evenings and weekends. Given a choice between Angular and Ractive for a large production application, most developers would probably be wise to select Angular.</p>
+<h2 id="so-why-bother-with-ractive-">So why bother with Ractive?</h2>
+<p>One word: simplicity. Angular looks easy at first, but to master it you have to learn some novel concepts (scope, dependency injection, transclusions, modules, directives...) that make writing Angular code feel quite different from writing regular JavaScript. (Before I continue, I should emphasise that I&#39;m not an Angular expert by any stretch &#8211; my impressions are largely formed from reading what other people have written.)</p>
+<p>Ractive, on the other hand, is designed to be as simple as possible, but no simpler. That&#39;s because of its heritage: it was <a href="the-origins-of-ractive">created in the newsroom</a> of <a href="http://theguardian.com">theguardian.com</a> for building interactive news applications. These apps have to be built in a very short space of time and work reliably across different environments &#8211; there&#39;s no time for prototyping etc. Just build it and ship it. You can&#39;t spend long optimising things, so the library has to make smart decisions for you.</p>
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/dmitrigrabov">@dmitrigrabov</a> Simplest binding framework I&#39;ve ever used is new: <a href="https://twitter.com/RactiveJS">@RactiveJS</a> from the Guardian. &#10;&#10;1. have object&#10;2. have template&#10;&#10;Done.</p>&#8212; Mike MacCana (@mikemaccana) <a href="https://twitter.com/mikemaccana/statuses/411108002297806848">December 12, 2013</a></blockquote>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Most of all, a lot of people building these kinds of apps aren&#39;t experienced developers &#8211; they&#39;re journalists or graphics people who have learned some JavaScript because they want to expand their skillsets and stay relevant, not because they get a kick out of watching Douglas Crockford videos.</p>
+<blockquote class="twitter-tweet" lang="en"><p>First piece of code that actually makes sense to my design-oriented brain: <a href="https://twitter.com/RactiveJS">@RactiveJS</a> - still on lesson 5, though</p>&#8212; K. Ant.  (@konstantinosant) <a href="https://twitter.com/konstantinosant/statuses/405590478956920832">November 27, 2013</a></blockquote>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Don&#39;t try explaining to a hacker-journalist that they need to call <code>$scope.digest()</code> or that, having just got their head around minification, they need to perform some elaborate maneouvres to prevent the dependency injection from breaking &#8211; trust me, they won&#39;t care!</p>
+<h2 id="enough-with-the-sales-pitch-what-do-they-have-in-common-">Enough with the sales pitch. What do they have in common?</h2>
+<p>Well, they&#39;re both largely concerned with eliminating ad-hoc DOM manipulation from the list of things developers have to worry about, by doing what&#39;s called <em>data binding</em> &#8211; modifying the page as data (your <em>model</em>, in MVC jargon) changes. Both libraries also offer <em>two-way data binding</em>, so that user interactions with the page update the model as necessary.</p>
+<p>Angular wasn&#39;t the first framework to offer data binding, but it arguably did it better than anyone had before, with a concise syntax based on the <a href="http://mustache.github.io/">Mustache</a> templating language. Ractive also uses Mustache, since it is easy to read and write, is widely used, and comes with a <a href="https://github.com/mustache/spec">formal test suite</a> against which implementations like Ractive can check compliance.</p>
+<p>They also share philosophical underpinnings. From <a href="http://angularjs.org">angularjs.org</a>:</p>
+<blockquote>
+<p>HTML is great for declaring static documents, but it falters when we try to use it for declaring dynamic views in web-applications ... Other frameworks deal with HTML’s shortcomings by either abstracting away HTML, CSS, and/or JavaScript or by providing an imperative way for manipulating the DOM. Neither of these address the root problem that HTML was not designed for dynamic views.</p>
+</blockquote>
+<p>Amen! Ractive, like Angular, takes the view that we should augment HTML to make it better suited to modern application development, rather than hiding the guts of our apps in JavaScript files, where it&#39;s hard to form complete mental models and <em>reason effectively</em> about them.</p>
+<p>Finally, both Angular and Ractive believe that your model should take the form of <a href="http://odetocode.com/blogs/scott/archive/2012/02/27/plain-old-javascript.aspx">POJOs</a>. Loading data from a server without having to convert it to some kind of <code>Model</code> or <code>Collection</code> object before you can use it is a liberating feeling. (That said, some apps benefit from the more rigorous approach, and Ractive fully supports that via <a href="http://docs.ractivejs.org/latest/adaptors">adaptors</a> &#8211; e.g. <a href="http://examples.ractivejs.org/backbone">Backbone</a>.)</p>
+<h2 id="and-where-do-they-differ-">And where do they differ?</h2>
+<p>Firstly, Angular isn&#39;t just about your user interface &#8211; it has opinions on routing, validation, server communication, testing, and so on. In other words it&#39;s a <em>framework</em> rather than a <em>library</em>.</p>
+<p>Ractive only really cares about UI. Use any router/backend/whatever you want &#8211; that&#39;s your responsibility.</p>
+<p>In some situations the framework is exactly what you need &#8211; a consistent, opinionated foundation on which to build your app. In other situations, it&#39;s a straitjacket. Personally I prefer building apps in a more modular fashion, but that&#39;s probably because of the type of app I build for a living. YMMV.</p>
+<p>Secondly, they have very different approaches to data binding. Angular uses &#39;dirty checking&#39;, whereby properties of the model are checked on every <code>$scope.digest()</code>, which is called automatically most of the time. Ractive uses a dependency tracking mechanism instead. When you call <code>ractive.set(&#39;foo&#39;, &#39;bar&#39;)</code>, all the <em>dependants</em> of <code>foo</code> are notified (if its value changed). The same principle applies when dealing with complex <a href="http://docs.ractivejs.org/latest/expressions">expressions</a>, which means you don&#39;t have to constantly worry about whether your computed properties will cause performance issues.</p>
+<p>Miško Hevery, the father of Angular, wrote <a href="http://stackoverflow.com/questions/9682092/databinding-in-angularjs/9693933#9693933">this Stack Overflow post</a> defending dirty checking, containing this zinger when comparing it to dependency tracking as seen in <a href="http://knockoutjs.com/">Knockout.js</a>:</p>
+<blockquote>
+<p>KO dependency tracking is a clever feature for a problem which angular does not have.</p>
+</blockquote>
+<p>True, but Angular&#39;s <code>$digest</code> loop is a clever solution for a problem that no other library has! In any case, Pete Hunt of <a href="http://facebook.github.io/react/">React.js</a> fame <a href="http://www.reddit.com/r/javascript/comments/1oo1y8">takes issue</a> with the notion that Angular&#39;s dirty checking is fast enough.</p>
+<p>A final important difference is in how your app is rendered. Traditional templating engines compile a string template to a function that, given some data, returns another string (which typically is <code>innerHTML</code>&#39;d into the page). Angular (and also Knockout) work by traversing the DOM, reading attributes, and setting up bindings accordingly. Aside from the <a href="http://iarouse.com/blog/2013/10/30/angularjs-avoid-flash-of-unstyled-content-fouc/">FOUC</a> that you then have to work around, this means that your page is peppered with non-validating gubbins like <code>ng-model</code>.</p>
+<p>Ractive takes a different approach. Your template lives as a string, and is parsed (on the server, if needs be &#8211; Ractive is <a href="http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/">isomorphic</a>) into a tree-like structure that can be transported as JSON. From there, Ractive constructs a lightweight <a href="http://docs.ractivejs.org/latest/parallel-dom">parallel DOM</a> containing all the information it needs to construct the real DOM and set up data-binding etc. In my view, this is a more hygienic approach. Parsing the template before the browser has a chance to has many benefits, even if some people do question the sanity of doing so:</p>
+<blockquote class="twitter-tweet" lang="en"><p>This is both brilliant &#38; ridiculous at the same time: “Introducing Ractive.js: next-generation DOM manipulation” <a href="http://t.co/17uHMKZFCQ">http://t.co/17uHMKZFCQ</a></p>&#8212; Rev Dan Catt (@revdancatt) <a href="https://twitter.com/revdancatt/statuses/360340071133622272">July 25, 2013</a></blockquote>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h2 id="honestly-just-try-it">Honestly, just try it</h2>
+<p>This was a long post &#8211; if you made it this far, I salute you. But if you really want to know the differences between Angular and Ractive, you should just try them both. Ractive has a <a href="http://docs.ractivejs.org/latest/second-setup">60-second setup guide</a> and a set of <a href="http://learn.ractivejs.org">interactive tutorials</a> (with more coming soon), and Angular has <a href="http://docs.angularjs.org/tutorial">learning resources</a> of its own.</p>
+<p>Ractive&#39;s development has been very community-driven &#8211; there is no ivory tower master plan, just hard-won real-life experience distilled into feature requests. It tastes of delicious <a href="http://www.newrepublic.com/article/115349/dogfooding-tech-slang-working-out-glitches">dogfood</a>. So if it doesn&#39;t have a feature you need, there&#39;s a very real chance it could do soon &#8211; just <a href="https://github.com/RactiveJS/Ractive">come on over to GitHub</a> and raise an issue.</p>
+</description>
+	<link>http://blog.ractivejs.org/posts/whats-the-difference-between-angular-and-ractive</link>
+	<guid>whats-the-difference-between-angular-and-ractive</guid>
+	<pubDate>Thu, 02 Jan 2014 12:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>Ractive.js expressions and the new wave of reactive programming</title>
+	<description><p><em>Originally posted at <a href="http://flippinawesome.org/2013/08/19/ractive-js-expressions-and-the-new-wave-of-reactive-programming/">flippinawesome.org</a></em></p>
+<p>Dedicated followers of JavaScript fashion will by now have noticed this season’s hot new trend. If you haven’t spotted it yet, here are a few projects sporting this style on the GitHub catwalk – <a href="http://facebook.github.io/react/">React</a>, <a href="https://github.com/mattbaker/Reactive.js">Reactive.js</a>, <a href="https://github.com/component/reactive">component/reactive</a> and <a href="https://github.com/yang/reactive-coffee">reactive.coffee</a>.</p>
+<p>That’s right: <em>reactive programming</em> is the new black.</p>
+<p>At a high level, the idea behind reactive programming is that changes in state propagate throughout a system. Put crudely, this means that in a reactive system where <code>a = b * 2</code>, whenever the value of <code>b</code> changes, the value of <code>a</code> will also change, rather than forever being equal to whatever <code>b * 2</code> was at the time of the statement.</p>
+<p>When we take this idea and apply it to user interfaces, we eliminate the DOM manipulation drudgery that dominates web developers’ lives.</p>
+<p><a href="http://ractivejs.org">Ractive.js</a> is a new library initially developed to create interactive (hence the name – not to be confused with Reactive.js!) news applications at <a href="http://theguardian.com">theguardian.com</a>. It is designed to dramatically reduce the effort involved in creating web apps by embracing these principles.</p>
+<p>Let’s look at a simple example:</p>
+<pre class="prettyprint lang-js">// We create a new ractive, which renders the following to a container element:
+// &#60;p&#62;Hello, Dave! You have 4 tasks remaining.&#60;/p&#62;
+
+var ractive = new Ractive({
+  el: container,
+  template: '&#60;p&#62;Hello, {{name}}! You have {{tasks.incomplete}} tasks remaining.&#60;/p&#62;',
+  data: { name: 'Dave', tasks: { incomplete: 4, total: 11 } }
+});
+
+// Later we get some new data:
+ractive.set( 'tasks', { incomplete: 5, total: 12 });
+
+// The ractive reacts accordingly, surgically updating the part of the DOM that is
+// now out of date:
+// &#60;p&#62;Hello, Dave! You have 5 tasks remaining.&#60;/p&#62;</pre>
+
+<p>Rather than doing any kind of polling or brute-force ‘dirty checking,’ this uses an elegant dependency tracking system: the text node containing the number of incomplete tasks depends on the <code>tasks.incomplete</code> <em>keypath</em>, which is a child of the <code>tasks</code> keypath. So when we update <code>tasks</code>, we know that we need to check to see if <code>tasks.incomplete</code> has changed – but we don’t need to bother checking <code>tasks.total</code>, because nothing depends on that keypath.</p>
+<p>As applications grow in complexity, this means much less work for the developer. You might think it sounds like more work for the browser, but it’s not. The non-reactive way to do interactive UI typically involves re-rendering views regardless of whether they’ve changed, and replacing chunks of perfectly good DOM (why hello, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management">garbage collector</a>), which is typically much less efficient.</p>
+<p>In other words, reactive UI is a win-win – better for performance, and better for your sanity.</p>
+<h2 id="the-secret-sauce-expressions">The secret sauce: expressions</h2>
+<p>This article won’t go any further into the basics of what Ractive does or why we built it – if you’re interested, you can <a href="http://learn.ractivejs.org">follow the interactive tutorials</a> or <a href="http://theguardian.com/info/developer-blog/2013/jul/24/ractive-js-next-generation-dom-manipulation">read the introductory blog post</a>. Instead, we’re going to focus on one of the features that helps Ractive stand out from its peers, namely <em>expressions</em>.</p>
+<p>Expressions allow you to take the logic that only your interface cares about, and put it in your template <em>where it belongs</em>. Yes, I just said that! If you’ve ever had to debug badly written PHP (for example), you may well shudder at the suggestion that logic belongs in templates. But while it’s true that <em>business logic</em> doesn’t belong in your templates, it’s equally true that a lot of <em>presentation logic</em> – aka ‘data massaging’ – doesn’t really belong in your code.</p>
+<aside>
+    <div class='aside-inner'>
+        <p>If you still need convincing, here’s a couple of good articles on the subject: <a href="http://www.ebaytechblog.com/2012/10/01/the-case-against-logic-less-templates/">The Case Against Logic-less Templates</a> and <a href="http://boronine.com/2012/09/07/Cult-Of-Logic-less-Templates/">Cult of Logic-Less Templates</a>.)</p>
+    </div>
+</aside>
+
+<p>Let’s take our initial example and turn it into a basic todo app along the lines of <a href="http://todomvc.com">TodoMVC</a>. Our template looks like this – ignore the question marks for now:</p>
+<pre class="prettyprint lang-html">&#60;p&#62;Hello, {{name}}! You have ??? tasks remaining.&#60;/p&#62;
+
+&#60;ul&#62;
+{{#tasks :i}}
+  &#60;li class='task'&#62;{{i}}: {{description}}&#60;/li&#62;
+{{/tasks}}
+&#60;/ul&#62;</pre>
+
+<p>Meanwhile our <em>model</em>, if you want to use MVC terminology, is a simple array of objects representing tasks:</p>
+<pre class="prettyprint lang-js">tasks = [
+  { completed: true,  description: 'Add a task' },
+  { completed: false, description: 'Add some more tasks' }.
+  { completed: false, description: 'Solve P = NP' }
+];
+
+ractive = new Ractive({
+  el: container,
+  template: template,
+  data: { name: 'Dave', tasks: tasks }
+});</pre>
+
+<p>This renders the following:</p>
+<pre class="prettyprint lang-html">&#60;p&#62;Hello, Dave! You have ??? tasks remaining.&#60;/p&#62;
+
+&#60;ul&#62;
+  &#60;li class='task'&#62;0: Add a task&#60;/li&#62;
+  &#60;li class='task'&#62;1: Add some more tasks&#60;/li&#62;
+  &#60;li class='task'&#62;2: Solve P = NP&#60;/li&#62;
+&#60;/ul&#62;</pre>
+
+<p>This time, there’s no <code>tasks.incomplete</code> property, because <code>tasks</code> is an array. We’ll come back to that. The first job is to rejig the numbers so that it starts at 1, because lists starting with 0 only make sense to programmers. Doing so is trivial:</p>
+<pre class="prettyprint lang-html">&#60;li class='task'&#62;{{i+1}}: {{description}}&#60;/li&#62;</pre>
+
+<p>Next, let’s add a <code>complete</code> class to any completed task:</p>
+<pre class="prettyprint lang-html">&#60;li class='task {{ completed ? "complete" : "pending" }}'&#62;{{i+1}}: {{description}}&#60;/li&#62;</pre>
+
+<p>Now, our rendered task list looks like this:</p>
+<pre class="prettyprint lang-html">&#60;p&#62;Hello, Dave! You have ??? tasks remaining.&#60;/p&#62;
+
+&#60;ul&#62;
+  &#60;li class='task complete'&#62;1: Add a task&#60;/li&#62;
+  &#60;li class='task pending'&#62;2: Add some more tasks&#60;/li&#62;
+  &#60;li class='task pending'&#62;3: Solve P = NP&#60;/li&#62;
+&#60;/ul&#62;</pre>
+
+<p>Now, let’s deal with those question marks. One way – the traditional way – would be to keep track of the incomplete count as a separate value in our model (or viewmodel, depending on which tribe you belong to), and update it every time the task list changed. The trouble with that is you have to add the necessary logic to every bit of your app that can change the model in some way – a toggle on each task, a ‘mark all as complete’ button, the code that reads from the server (or local storage), or whatever else gets added in future. It doesn’t scale.</p>
+<p>A better way is to have the template react to changes by calling any necessary logic <em>when it needs to</em>:</p>
+<pre class="prettyprint lang-html">&#60;p&#62;Hello, Dave! You have {{ tasks.filter( incomplete ).length }} tasks remaining.&#60;/p&#62;</pre>
+
+<p>Then, we just need to add an <code>incomplete</code> filter to our model:</p>
+<pre class="prettyprint lang-js">ractive = new Ractive({
+  el: container,
+  template: template,
+  data: {
+    name: 'Dave',
+    tasks: tasks,
+    incomplete: function ( item ) {
+      return !item.completed;
+    }
+  }
+});</pre>
+
+<p>Now, whenever <code>tasks</code> changes – whether because we’ve added a new one, or changed the status of one or more tasks, or whatever – the expression will be re-evaluated. If the number of incomplete tasks has changed, the DOM will be updated.</p>
+<p>As our app becomes more complex, this approach scales beautifully, saving us from a convoluted observing/massaging/updating of our data.</p>
+<aside>
+    <div class='aside-inner'>
+        <p>You can see a <a href="http://todomvc.com/labs/architecture-examples/ractive/">fully fleshed out TodoMVC implementation here</a> – (the <a href="https://github.com/tastejs/todomvc/tree/gh-pages/labs/architecture-examples/ractive">source code</a> is possibly the shortest of any implementation, and arguably some of the most readable).</p>
+    </div>
+</aside>
+
+<p>It also allows us to do things like <a href="http://examples.ractivejs.org/animated-chart">sophisticated animations</a>, without reams of complex render logic.</p>
+<h2 id="how-does-it-work-">How does it work?</h2>
+<p>Traditional templating engines work by <em>interpolating strings</em>, the result of which is typically rendered using <code>innerHTML</code>. Ractive is different – it parses templates into a tree-like JSON structure which contains the DNA of the app, using a <a href="http://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG-style parser</a>. When it encounters an expression, the parser first creates an <a href="http://en.wikipedia.org/wiki/Abstract_syntax_tree">abstract syntax tree</a> representation of it, then extracts the <em>references</em> from the AST, then collapses it down to a string representation.</p>
+<pre class="prettyprint lang-js">Ractive.parse( '{{i+1}}' );
+
+// results in the following &#8211; it's deliberately terse, so that
+// you can parse on the server and send the result to browsers
+// without wasting bytes:
+// {
+//   t: 2,          // the type of mustache
+//   x: {           // the expression
+//     r: [ "i" ],  // the references used in the expression
+//     s: "${0}+1"  // a reference-agnostic string representation
+//   }
+// }</pre>
+
+<p>Later, when Ractive renders this mustache, it will try to <em>resolve the references</em> used in the expression. In this example, there’s only one reference – <code>i</code> – which resolves to <code>0</code> for the first task, then <code>1</code>, then <code>2</code> and so on. Ractive creates a function – using the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function constructor</a> – that takes the value of <code>i</code> as an argument and returns <code>i+1</code>.</p>
+<p>This might seem like a roundabout way to add 1 to something. But because we only need to create the function once, rather than repeatedly <code>eval</code>ing code (which is slow), it’s a memory-efficient and performant way to solve the problem even when dealing with hundreds of tasks.</p>
+<p>And because we know which references are involved, we know when to call the function again. Consider the next expression:</p>
+<pre class="prettyprint lang-js">Ractive.parse( '{{ completed ? "complete" : "pending" }}' );
+
+// {
+//   t: 2,
+//   x: {
+//     r: [ "completed" ],
+//     s: "${0}?'complete':'pending'"
+//   }
+// }</pre>
+
+<p>For the first task, the <code>completed</code> reference resolves to the keypath <code>tasks.0.completed</code> – for the second, <code>tasks.1.completed</code> and so on. In each case, Ractive <em>registers the mustache</em> as a <em>dependant</em> of the keypath, so that when <code>tasks.0.completed</code> changes (again, it doesn’t matter what happened to cause it to change – that’s the beauty of reactive programming), the expression is re-evaluated and the DOM is updated.</p>
+<h2 id="so-is-it-real-javascript-">So is it ‘real JavaScript’?</h2>
+<p>Up to a point. Since in a reactive system we don’t have control over when the expression is evaluated, it’s important that expressions don’t have <em>side effects</em> – so if we try to use assignment operators such as <code>foo = bar</code> or <code>foo += 1</code>, the parser will fail. The same goes for certain keywords, such as <code>new</code>, <code>delete</code> and <code>function</code>.</p>
+<p>Of course, it’s still possible to create side-effects by referencing a function which itself has side-effects. Remember our <code>incomplete</code> filter? There’s nothing to stop you doing this:</p>
+<pre class="prettyprint lang-js">ractive = new Ractive({
+  el: container,
+  template: template,
+  data: {
+    name: 'Dave',
+    tasks: tasks,
+    incomplete: function ( item ) {
+      doSomeExpensiveComputation();
+      counter += 1;
+      return !item.completed;
+    }
+  }
+});</pre>
+
+<p>But by parsing expressions and blocking ‘accidental’ side-effects, we can encourage best practices without preventing power users from manipulating the system to their own ends.</p>
+<h2 id="the-future">The future</h2>
+<p>Expect to see more examples of the reactive programming trend coming to a repository near you. As with all programming paradigms, it’s not a silver bullet, but by integrating reactive thinking into our work we can start to structure our applications in a way that is more readable and (often) more efficient.</p>
+<p><a href="http://ractivejs.org">Ractive.js</a> is under active development – it’s production-ready (to get started, <a href="https://github.com/RactiveJS/Ractive/wiki/60-second-setup">try the 60 second setup</a> or <a href="http://learn.ractivejs.org">follow the interactive tutorials</a>), but will continue to evolve as we collectively figure out the secrets of reactive programming. If you’re interested in being part of that conversation, <a href="https://github.com/RactiveJS/Ractive">come on over to GitHub</a> and help shape the future of web development.</p>
+</description>
+	<link>http://blog.ractivejs.org/posts/ractive-js-expressions-and-the-new-wave-of-reactive-programming</link>
+	<guid>ractive-js-expressions-and-the-new-wave-of-reactive-programming</guid>
+	<pubDate>Wed, 01 Jan 2014 12:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>The origins of Ractive</title>
+	<description><p><em>Originally posted on <a href="http://source.opennews.org/en-US/articles/introducing-ractivejs/">Source</a>, the blog for newsroom developers and hacker-journalists</em></p>
+<p>Making interactives is hard. You have to:</p>
+<ul>
+<li>figure out the story</li>
+<li>find some data (possibly) and clean it/transform it (almost certainly)</li>
+<li>design a user interface</li>
+<li>mark it up with HTML</li>
+<li>style it with CSS</li>
+<li>make it dance with JavaScript</li>
+<li>test it in different browsers and on mobile devices</li>
+<li>deploy it</li>
+<li>fix all the bugs you missed</li>
+<li>deploy it again</li>
+</ul>
+<p>...and you have to do all that against deadlines that would make most developers wince. And yet here’s the thing: in many newsrooms, the people building these interactive stories — and in so doing figuring out the rules of a <a href="https://vimeo.com/67076984">fundamentally new form of media</a> — are not experienced developers.</p>
+<p>They’re journalist-hackers and lone crusaders, fighting for the future of news against (in some cases) bureaucratic overlords who still think video on the web is the next big thing. And they—we—deserve better weapons for the fight.</p>
+<h2 id="origins">Origins</h2>
+<p>Two years ago, as a journalist at <a href="http://citywire.co.uk/money">Citywire</a>, I began tinkering with JavaScript. I was lucky—I had supportive bosses, and the dev team decided it was better to help me become less dangerous than to try and shut me down—and so we were able to produce a few interactives, such as <a href="http://citywire.co.uk/money/interactive-how-much-has-rent-gone-up-in-your-area/a538600">this piece on UK-wide rent hikes</a>.</p>
+<p>But I was so far out of my depth. Keeping all the different components of an interactive in sync, handling user events like mouse clicks, storing dozens of references to jQuery objects so I could manipulate them—it was chaos. I longed for a library that would help me do all these things.</p>
+<p>Later, when I joined the <a href="http://www.theguardian.com/profile/guardian-interactive-department">Guardian Interactive team</a>, I found myself surrounded by brilliant and experienced developers, and quickly realised my jQuery spaghetti wasn’t going to cut it any more. But if my dream library didn’t exist, I was going to have to build it.</p>
+<h2 id="how-does-ractive-js-help-">How does Ractive.js help?</h2>
+<p>The core premise of Ractive is that <em>declarative programming</em> is easier than <em>imperative programming</em>. In other words, if you can <em>declare</em> your intentions, rather than laboriously describing the steps you want the computer to take to realise your intentions, you can finish work and get to the pub sooner.</p>
+<p>What this means in practice is that more of your app is defined in HTML templates. To take the simplest possible example, let’s make a Hello World template:</p>
+<pre class="prettyprint lang-html">&#60;p&#62;Hello, {{name}}!&#60;/p&#62;</pre>
+
+<p>Describing our interactive with an HTML template is obviously better than <code>document.createElement(&#39;p&#39;).innerHTML = &#39;Hello ,&#39; + name + &#39;!&#39;</code> — very few people would dispute that. But where Ractive differs radically from other templating libraries is that it <em>parses</em> the HTML and fully understands its structure — and the bits of data it depends on — rather than simply replacing <code>{{name}}</code> and dumping the resulting HTML onto the page.</p>
+<p>The result is that updating the interactive with new data is painless:</p>
+<pre class="prettyprint lang-js">ractive.set( 'name', 'World' );</pre>
+
+<p>Moreover, because Ractive is <em>state-aware</em>, it can avoid doing unnecessary updates, thus easing what’s generally considered to be the biggest performance bottleneck in web development.</p>
+<h2 id="that-s-just-the-beginning">That’s just the beginning</h2>
+<p>It turns out that this approach makes it really easy to do a whole suite of things—animations, SVG data visualisations, neater event handling, collecting user input, and so on.</p>
+<p>If these sound like things that could make your life easier then you can find all the <a href="http://examples.ractivejs.org">examples</a>, <a href="http://learn.ractivejs.org">tutorials</a> and <a href="https://github.com/Rich-Harris/Ractive/wiki">documentation</a> you need to get started—including the <a href="http://www.ractivejs.org/60-second-setup">60-second set-up</a> — via <a href="http://www.ractivejs.org/">ractivejs.org</a>.</p>
+<p>Ractive has been used to build a number of Guardian interactives, so even though development is still ongoing (<a href="https://github.com/Rich-Harris/Ractive/issues">issues and pull requests</a> are always welcome!) it’s definitely production-ready. It’s been tested successfully in IE8+ and in all modern browsers.</p>
+<p>If you build something with Ractive, we’d love to hear about it.</p>
+<h2 id="acknowledgment">Acknowledgment</h2>
+<p>The development of Ractive.js was made possible, in part, by the <a href="http://www.gatesfoundation.org/">Bill &#38; Melinda Gates Foundation</a>’s support for <a href="http://www.theguardian.com/global-development/">Guardian Global development</a>.</p>
+</description>
+	<link>http://blog.ractivejs.org/posts/the-origins-of-ractive</link>
+	<guid>the-origins-of-ractive</guid>
+	<pubDate>Tue, 31 Dec 2013 12:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>Introducing Ractive.js</title>
+	<description><p><em>Originally posted on the <a href="http://www.theguardian.com/info/developer-blog/2013/jul/24/ractive-js-next-generation-dom-manipulation">Guardian developer blog</a></em></p>
+<p>Anyone with fond memories of the <a href="http://www.youtube.com/watch?v=gsNaR6FRuO0">sound of dial-up internet</a> will understand how ridiculous it would have seemed, to the web&#39;s pioneers, that we would one day be using this geeky information exchange format to play games, do grocery shopping, collaborate on spreadsheets and even <a href="https://c9.io/">build more webapps</a>. Yet here we are.</p>
+<p>But despite taking over the world, the web has a dirty secret: it&#39;s actually a lousy platform for creating many of the experiences we take for granted. Let me qualify that: it&#39;s an amazing technology for creating <em>documents</em>, but for creating <em>apps</em> &#8211; interactive experiences that respond to user input, and represent changing data &#8211; web development can be akin to pulling teeth.</p>
+<p>Consider the following simple task. We have an interface that shows our user, Dave, how many unread messages he has. When he gets a new message, how do we update the interface?</p>
+<pre class="prettyprint lang-html">&#60;p&#62;Hello Dave! You have 4 new messages.&#60;/p&#62;</pre>
+
+<p>In the bad old days, you&#39;d have to reload the page, and the server would send you some freshly-rendered HTML. But let&#39;s assume we&#39;ve got a model that contains our data, and that we need to update the existing view. Here are our options:</p>
+<h2 id="1-just-use-jquery">1. Just use jQuery</h2>
+<pre class="prettyprint lang-js">var p = $('p');
+
+function updateView (username, msgCount) {
+  p.text('Hello ' + username + '! You have ' + msgCount + ' new messages.');
+};</pre>
+
+<p>This is generally agreed to be a Bad Idea &#8211; mixing your templates and your logic will end in tears. What if a non-programmer needs to change the wording? They&#39;ll probably break something, that&#39;s what.</p>
+<h2 id="2-target-specific-elements">2. Target specific elements</h2>
+<pre class="prettyprint lang-html">&#60;p&#62;
+  Hello &#60;span id='username'&#62;&#60;/span&#62;!
+  You have &#60;span id='msgCount'&#62;&#60;/span&#62; new messages.
+&#60;/p&#62;</pre>
+
+<pre class="prettyprint lang-js">var usernameSpan = $('#username'),
+  msgCountSpan = $('#msgCount');
+
+function updateUserName (username) {
+  usernameSpan.text(username);
+};
+
+function updateMsgCount (msgCount) {
+  msgCountSpan.text(msgCount);
+};
+
+// initialise our view
+updateUsername(model.username);
+updateMsgCount(model.msgCount);</pre>
+
+<p>Better, except that now we&#39;ve added two extra <code>&#60;span&#62;</code> elements to the DOM. That means more work for the browser, which can become particularly noticeable on mobile devices. And we&#39;ve got to traverse the DOM and store references to elements.</p>
+<h2 id="3-templating">3. Templating</h2>
+<pre class="prettyprint lang-html">&#60;p&#62;Hello &#60;%= username %&#62;! You have &#60;%= msgCount %&#62; new messages.&#60;/p&#62;</pre>
+
+<p>Now we&#39;re getting somewhere &#8211; our templates and our logic are cleanly separated. But wait! What happens when we update the view?</p>
+<pre class="prettyprint lang-js">var body = $(body),
+  // we're using Underscore templates here
+  template = new _.template(templateStr);
+
+function updateView (model) {
+  var html = template({
+    username: model.username,
+    msgCount: model.msgCount
+  });
+
+  body.html(html);
+};
+
+// initialise
+updateView(model);</pre>
+
+<p>What happens is that the existing element gets removed from the DOM, and a new one gets created. At best, the old one will be hoovered up by the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management">garbage collector</a>; at worst, it will remain in memory. Either way, it&#39;s bad for performance.</p>
+<p>In the context of this contrived example it might seem trivial, but as an app becomes more complex, these things start to show.</p>
+<h2 id="4-just-use-angular">4. Just use Angular</h2>
+<p>At this point, many developers will point you towards a framework such as <a href="http://angularjs.org">AngularJS</a> or <a href="http://emberjs.com/">EmberJS</a>. These frameworks do a lot of the heavy lifting for you, particularly as far as model-view data binding is concerned.</p>
+<p>Angular in particular is hugely popular at the moment. (The Guardian is currently using it for a major internal project, in fact.)</p>
+<p>But these frameworks also have a cost &#8211; they tend to be fairly large, and once you&#39;ve finished the &#39;hello world&#39; tutorials they have steep learning curves. Particularly for smaller projects, it&#39;s often a case of using a sledgehammer to crack a nut.</p>
+<p>You see the problem. What should be an incredibly basic task is a snakepit of compromises and ugly code &#8211; yet we&#39;re all so used to developing this way that we&#39;re barely even aware of how awkward it is.</p>
+<h2 id="enter-ractive-js">Enter Ractive.js</h2>
+<p><a href="http://ractivejs.org">Ractive</a> was initially created to tackle the data binding problem in a more elegant way. We on the <a href="http://www.guardian.co.uk/profile/guardian-interactive-department">Guardian interactive team</a> are acutely aware of the challenges of creating app-like experiences on the web; interactives, by their nature, require a huge amount of DOM manipulation, and as slaves to the editorial agenda we typically have tight deadlines.</p>
+<p>The above example, with Ractive, would go something like this:</p>
+<pre class="prettyprint lang-html">&#60;p&#62;Hello {{username}}! You have {{msgCount}} new messages.&#60;/p&#62;</pre>
+
+<pre class="prettyprint lang-js">var view = new Ractive({
+  el: document.body,
+  template: templateStr,
+  data: model // contains our username and msgCount properties
+});
+
+function updateView (model) {
+  view.set(model);
+};</pre>
+
+<p>Initially, Ractive parses the template and determines that <code>{{msgCount}}</code> should be treated as a separate <em>text node</em>, which depends on the <code>msgCount</code> property of our model.</p>
+<p>When you call <code>view.set()</code>, Ractive compares the new data against its current state, and scans its internal dependency graph to see if any part of the DOM needs to be updated. If so, it only touches those parts &#8211; which means no DOM nodes will be created or destroyed.</p>
+<p>The browser has much less work to do, but &#8211; and this is the crucial part &#8211; so does the developer. The benefits of this approach become increasingly apparent as you deal with more complex templates, representing more complex data. You can see for yourself how it makes life easier by following the <a href="http://learn.ractivejs.org">tutorials</a> or checking out the <a href="http://examples.ractivejs.org">examples</a>.</p>
+<h2 id="beyond-data-binding">Beyond data binding</h2>
+<p>It soon became apparent that this approach enables us to do other things more efficiently as well. It&#39;s a philosophical change in the relationship between HTML and JavaScript &#8211; HTML is no longer an inert substance which must have life breathed into it, but a blueprint for an app that is interactive by default.</p>
+<p>Take event handling for example. Web developers are used to peppering their HTML with meaningless <code>id</code> and <code>class</code> attributes as &#39;hooks&#39;, so that they can later traverse the DOM, find them, and add event handlers:</p>
+<pre class="prettyprint lang-html">&#60;button id='activate'&#62;Activate!&#60;/button&#62;
+&#60;button id='deactivate'&#62;Deactivate!&#60;/button&#62;</pre>
+
+<pre class="prettyprint lang-js">$('#activate').on('click', function () {
+  alert('Activating!');
+});
+
+$('#deactivate').on('click', function () {
+  alert('Deactivating!');
+});</pre>
+
+<p>But if you treat the HTML as a blueprint, you can bake the semantics of user interaction right into your template:</p>
+<pre class="prettyprint lang-html">&#60;button proxy-click='activate'&#62;Activate!&#60;/button&#62;
+&#60;button proxy-click='deactivate'&#62;Deactivate!&#60;/button&#62;</pre>
+
+<pre class="prettyprint lang-js">view.on({
+  activate: function () {
+    alert('Activating!');
+  },
+  deactivate: function () {
+    alert('Deactivating!');
+  }
+});</pre>
+
+<p>Moreover, we can now automatically take care of things like reusing event handlers and automatically unbinding them when they&#39;re no longer needed. Event delegation becomes unnecessary. As with data binding, this approach prevents your code from becoming unwieldy as your app grows.</p>
+<h2 id="sexy-features">Sexy features</h2>
+<p>So far, this all sounds fairly prosaic &#8211; handy, perhaps, but nothing you can&#39;t already do with <a href="http://vanilla-js.com/">vanilla JS</a>. But the real fun starts when we start exploiting some of the features that emerge from Ractive&#39;s statefulness and dependency tracking, such as complex but easy-to-create animations. We&#39;re one step closer to the holy grail of completely declarative, reactive programming.</p>
+<p>But we&#39;re only getting started. While it&#39;s been used in production in several interactives, it&#39;s still an early-stage project which needs brave souls to try it out in projects and (if necessary!) submit bug reports. If you build something with it, we&#39;d love to hear from you.</p>
+<figure>
+    <img src="../../assets/images/animated-chart.jpg" alt="Interactive data visualisations are much easier to create with Ractive.js &#8211; no DOM event handling, no state management, no labyrinthine render methods"></img>
+
+    <figcaption>
+        Interactive <a href="http://examples.ractivejs.org/animated-chart">data visualisations</a> are much easier to create with Ractive.js &#8211; no DOM event handling, no state management, no labyrinthine render methods
+    </figcaption>
+</figure>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>The development of Ractive was made possible, in part, by the <a href="http://www.gatesfoundation.org/">Bill and Melinda Gates Foundation</a>&#39;s support for the Guardian <a href="http://www.guardian.co.uk/global-development">Global Development</a> desk.</p>
+</description>
+	<link>http://blog.ractivejs.org/posts/introducing-ractive-js</link>
+	<guid>introducing-ractive-js</guid>
+	<pubDate>Mon, 30 Dec 2013 12:00:00 +0000</pubDate>
+</item>
+
+</channel>
+</rss>

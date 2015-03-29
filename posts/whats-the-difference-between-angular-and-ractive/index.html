@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>What's the difference between Angular and Ractive? | Blog | Ractive.js</title>
+
+	<link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+	<link rel="stylesheet" href="../../min.css">
+
+	<!--[if lte IE 8]>
+		<script src='../../assets/respond.min.js'></script>
+		<script src='../../assets/html5shiv.min.js'></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<nav>
+	<div class="nav-inner">
+		<a href="http://ractivejs.org">Ractive.js</a>
+
+		<ul>
+			<li><a href=http://ractivejs.org/60-second-setup>60 second setup</a></li>
+			<li><a href=http://learn.ractivejs.org>Tutorials</a></li>
+			<li><a href=http://examples.ractivejs.org>Examples</a></li>
+			<li><a href=http://docs.ractivejs.org>Docs</a></li>
+			<li><a href=http://docs.ractivejs.org/latest/plugins>Plugins</a></li>
+			<li class=selected><a href=http://blog.ractivejs.org>Blog</a></li>
+			<li class=github-small><a href=https://github.com/ractivejs/ractive>GitHub</a></li>
+		</ul>
+
+		<a class="github-wide" href="https://github.com/ractivejs/ractive">GitHub</a>
+
+		<button id="nav-toggle">&#9776;</button>
+	</div>
+</nav>
+		<header class="post-header">
+			<h1>What's the difference between Angular and Ractive?</h1>
+			<p class="meta">
+				<a href="http://twitter.com/Rich_Harris">Rich Harris</a>
+				
+				<span class="bullet">&bull;</span> 2 January 2014 <span class="bullet">&bull;</span> <a href="#disqus_thread" data-disqus-identifier="whats-the-difference-between-angular-and-ractive">Comments</a>
+			</p>
+		</header>
+
+		<main>
+			<article class="post">
+					<figure class="poster type-medium">
+						
+							<img alt="" src="../../assets/images/angular-v-ractive.png">
+											</figure>
+				<p>Lots of people have asked what the difference is between Ractive and other libraries and frameworks. It&#39;s long been my intention to write a series of articles attempting to answer, but I&#39;ve always put it off because a) I didn&#39;t have anywhere to post the articles, and b) I didn&#39;t feel qualified to compare Ractive to libraries that I&#39;m not particularly familiar with.</p>
+<p>Now that I&#39;ve got round to setting up this blog, a) is no longer an issue. As for b)... well, if I get stuff wrong, people will correct me &ndash; this is the Internet, after all. And I&#39;ll edit these posts as necessary to keep them accurate.</p>
+<p>I was going to begin the series by comparing Ractive to <a href="http://facebook.github.io/react/">React.js</a>, which in my view is one of the more interesting JavaScript libraries of 2013. It has lots of philosophical similarities to Ractive, but also some stark differences. It should be an interesting study.</p>
+<p>But the question I&#39;ve had more frequently &ndash; and <a href="http://stackoverflow.com/questions/20893066/differences-between-ractivejs-and-angularjs">most recently</a> &ndash; is how Ractive compares to <a href="http://angularjs.org/">Angular</a>. So I&#39;m going to start there.</p>
+<h2 id="what-is-angular-">What is Angular?</h2>
+<p>You&#39;re kidding, right? Angular is a wildly successful project. Its <a href="https://github.com/angular/angular.js">GitHub repo</a> has 18,579 stargazers (at the time of writing) &ndash; almost ten times Ractive&#39;s 1,950. Their <a href="http://twitter.com/angularjs">twitter account</a> has 28,629 followers, and there are hundreds if not thousands of <a href="http://builtwith.angularjs.org/">Angular apps</a> in the wild. Most days, an article or video or tutorial about Angular will show up on the Hacker News front page if not on dozens of other front end blogs.</p>
+<aside>
+    <div class='aside-inner'>
+        <p><a href='../../assets/images/anglebars.jpg'><img src='../../assets/images/anglebars.jpg' style='width: 5em; float: right; margin: 0 0 1em 1em'></a>Fun fact! Way back in the mists of time, Ractive was called Anglebars &ndash; because it was kind of halfway between Angular and Handlebars. I even ripped off the logo. In other words, Angular was a big inspiration for Ractive.</p>
+    </div>
+</aside>
+
+<p>It is, by any measure, an impressive showing. And it&#39;s built and maintained by the geniuses at Google, several of whom work on it full time. Ractive, by contrast, has one core contributor &ndash; yours truly (though it has an excellent community which has made it immeasurably better) &ndash; and is the product of unpaid evenings and weekends. Given a choice between Angular and Ractive for a large production application, most developers would probably be wise to select Angular.</p>
+<h2 id="so-why-bother-with-ractive-">So why bother with Ractive?</h2>
+<p>One word: simplicity. Angular looks easy at first, but to master it you have to learn some novel concepts (scope, dependency injection, transclusions, modules, directives...) that make writing Angular code feel quite different from writing regular JavaScript. (Before I continue, I should emphasise that I&#39;m not an Angular expert by any stretch &ndash; my impressions are largely formed from reading what other people have written.)</p>
+<p>Ractive, on the other hand, is designed to be as simple as possible, but no simpler. That&#39;s because of its heritage: it was <a href="the-origins-of-ractive">created in the newsroom</a> of <a href="http://theguardian.com">theguardian.com</a> for building interactive news applications. These apps have to be built in a very short space of time and work reliably across different environments &ndash; there&#39;s no time for prototyping etc. Just build it and ship it. You can&#39;t spend long optimising things, so the library has to make smart decisions for you.</p>
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/dmitrigrabov">@dmitrigrabov</a> Simplest binding framework I&#39;ve ever used is new: <a href="https://twitter.com/RactiveJS">@RactiveJS</a> from the Guardian. &#10;&#10;1. have object&#10;2. have template&#10;&#10;Done.</p>&mdash; Mike MacCana (@mikemaccana) <a href="https://twitter.com/mikemaccana/statuses/411108002297806848">December 12, 2013</a></blockquote>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Most of all, a lot of people building these kinds of apps aren&#39;t experienced developers &ndash; they&#39;re journalists or graphics people who have learned some JavaScript because they want to expand their skillsets and stay relevant, not because they get a kick out of watching Douglas Crockford videos.</p>
+<blockquote class="twitter-tweet" lang="en"><p>First piece of code that actually makes sense to my design-oriented brain: <a href="https://twitter.com/RactiveJS">@RactiveJS</a> - still on lesson 5, though</p>&mdash; K. Ant.  (@konstantinosant) <a href="https://twitter.com/konstantinosant/statuses/405590478956920832">November 27, 2013</a></blockquote>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Don&#39;t try explaining to a hacker-journalist that they need to call <code>$scope.digest()</code> or that, having just got their head around minification, they need to perform some elaborate maneouvres to prevent the dependency injection from breaking &ndash; trust me, they won&#39;t care!</p>
+<h2 id="enough-with-the-sales-pitch-what-do-they-have-in-common-">Enough with the sales pitch. What do they have in common?</h2>
+<p>Well, they&#39;re both largely concerned with eliminating ad-hoc DOM manipulation from the list of things developers have to worry about, by doing what&#39;s called <em>data binding</em> &ndash; modifying the page as data (your <em>model</em>, in MVC jargon) changes. Both libraries also offer <em>two-way data binding</em>, so that user interactions with the page update the model as necessary.</p>
+<p>Angular wasn&#39;t the first framework to offer data binding, but it arguably did it better than anyone had before, with a concise syntax based on the <a href="http://mustache.github.io/">Mustache</a> templating language. Ractive also uses Mustache, since it is easy to read and write, is widely used, and comes with a <a href="https://github.com/mustache/spec">formal test suite</a> against which implementations like Ractive can check compliance.</p>
+<p>They also share philosophical underpinnings. From <a href="http://angularjs.org">angularjs.org</a>:</p>
+<blockquote>
+<p>HTML is great for declaring static documents, but it falters when we try to use it for declaring dynamic views in web-applications ... Other frameworks deal with HTML’s shortcomings by either abstracting away HTML, CSS, and/or JavaScript or by providing an imperative way for manipulating the DOM. Neither of these address the root problem that HTML was not designed for dynamic views.</p>
+</blockquote>
+<p>Amen! Ractive, like Angular, takes the view that we should augment HTML to make it better suited to modern application development, rather than hiding the guts of our apps in JavaScript files, where it&#39;s hard to form complete mental models and <em>reason effectively</em> about them.</p>
+<p>Finally, both Angular and Ractive believe that your model should take the form of <a href="http://odetocode.com/blogs/scott/archive/2012/02/27/plain-old-javascript.aspx">POJOs</a>. Loading data from a server without having to convert it to some kind of <code>Model</code> or <code>Collection</code> object before you can use it is a liberating feeling. (That said, some apps benefit from the more rigorous approach, and Ractive fully supports that via <a href="http://docs.ractivejs.org/latest/adaptors">adaptors</a> &ndash; e.g. <a href="http://examples.ractivejs.org/backbone">Backbone</a>.)</p>
+<h2 id="and-where-do-they-differ-">And where do they differ?</h2>
+<p>Firstly, Angular isn&#39;t just about your user interface &ndash; it has opinions on routing, validation, server communication, testing, and so on. In other words it&#39;s a <em>framework</em> rather than a <em>library</em>.</p>
+<p>Ractive only really cares about UI. Use any router/backend/whatever you want &ndash; that&#39;s your responsibility.</p>
+<p>In some situations the framework is exactly what you need &ndash; a consistent, opinionated foundation on which to build your app. In other situations, it&#39;s a straitjacket. Personally I prefer building apps in a more modular fashion, but that&#39;s probably because of the type of app I build for a living. YMMV.</p>
+<p>Secondly, they have very different approaches to data binding. Angular uses &#39;dirty checking&#39;, whereby properties of the model are checked on every <code>$scope.digest()</code>, which is called automatically most of the time. Ractive uses a dependency tracking mechanism instead. When you call <code>ractive.set(&#39;foo&#39;, &#39;bar&#39;)</code>, all the <em>dependants</em> of <code>foo</code> are notified (if its value changed). The same principle applies when dealing with complex <a href="http://docs.ractivejs.org/latest/expressions">expressions</a>, which means you don&#39;t have to constantly worry about whether your computed properties will cause performance issues.</p>
+<p>Miško Hevery, the father of Angular, wrote <a href="http://stackoverflow.com/questions/9682092/databinding-in-angularjs/9693933#9693933">this Stack Overflow post</a> defending dirty checking, containing this zinger when comparing it to dependency tracking as seen in <a href="http://knockoutjs.com/">Knockout.js</a>:</p>
+<blockquote>
+<p>KO dependency tracking is a clever feature for a problem which angular does not have.</p>
+</blockquote>
+<p>True, but Angular&#39;s <code>$digest</code> loop is a clever solution for a problem that no other library has! In any case, Pete Hunt of <a href="http://facebook.github.io/react/">React.js</a> fame <a href="http://www.reddit.com/r/javascript/comments/1oo1y8">takes issue</a> with the notion that Angular&#39;s dirty checking is fast enough.</p>
+<p>A final important difference is in how your app is rendered. Traditional templating engines compile a string template to a function that, given some data, returns another string (which typically is <code>innerHTML</code>&#39;d into the page). Angular (and also Knockout) work by traversing the DOM, reading attributes, and setting up bindings accordingly. Aside from the <a href="http://iarouse.com/blog/2013/10/30/angularjs-avoid-flash-of-unstyled-content-fouc/">FOUC</a> that you then have to work around, this means that your page is peppered with non-validating gubbins like <code>ng-model</code>.</p>
+<p>Ractive takes a different approach. Your template lives as a string, and is parsed (on the server, if needs be &ndash; Ractive is <a href="http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/">isomorphic</a>) into a tree-like structure that can be transported as JSON. From there, Ractive constructs a lightweight <a href="http://docs.ractivejs.org/latest/parallel-dom">parallel DOM</a> containing all the information it needs to construct the real DOM and set up data-binding etc. In my view, this is a more hygienic approach. Parsing the template before the browser has a chance to has many benefits, even if some people do question the sanity of doing so:</p>
+<blockquote class="twitter-tweet" lang="en"><p>This is both brilliant &amp; ridiculous at the same time: “Introducing Ractive.js: next-generation DOM manipulation” <a href="http://t.co/17uHMKZFCQ">http://t.co/17uHMKZFCQ</a></p>&mdash; Rev Dan Catt (@revdancatt) <a href="https://twitter.com/revdancatt/statuses/360340071133622272">July 25, 2013</a></blockquote>
+<script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<h2 id="honestly-just-try-it">Honestly, just try it</h2>
+<p>This was a long post &ndash; if you made it this far, I salute you. But if you really want to know the differences between Angular and Ractive, you should just try them both. Ractive has a <a href="http://docs.ractivejs.org/latest/second-setup">60-second setup guide</a> and a set of <a href="http://learn.ractivejs.org">interactive tutorials</a> (with more coming soon), and Angular has <a href="http://docs.angularjs.org/tutorial">learning resources</a> of its own.</p>
+<p>Ractive&#39;s development has been very community-driven &ndash; there is no ivory tower master plan, just hard-won real-life experience distilled into feature requests. It tastes of delicious <a href="http://www.newrepublic.com/article/115349/dogfooding-tech-slang-working-out-glitches">dogfood</a>. So if it doesn&#39;t have a feature you need, there&#39;s a very real chance it could do soon &ndash; just <a href="https://github.com/RactiveJS/Ractive">come on over to GitHub</a> and raise an issue.</p>
+
+
+			</article>
+
+			<section class="comments">
+				<div id="disqus_thread"></div>
+				<noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+				<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class=logo-disqus>Disqus</span></a>
+			</section>
+		</main>
+	<footer>
+	<p>Ractive.js is a free and open source project released under the MIT license.</p>
+</footer>
+
+
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-5602942-5', 'ractivejs.org');
+	ga('send', 'pageview');
+</script>
+
+
+
+	<script>
+		// Disqus
+		var disqus_shortname = 'ractivejs';
+		var disqus_identifier = 'whats-the-difference-between-angular-and-ractive';
+		var disqus_url = 'http://blog.ractivejs.org/posts/whats-the-difference-between-angular-and-ractive';
+
+		(function() {
+		    var s = function (url) {
+		    	var scr = document.createElement('script'); scr.type = 'text/javascript'; scr.async = true;
+		    	scr.src = url;
+		    	(document.head || document.body).appendChild(scr);
+		    };
+		    s('//ractivejs.disqus.com/embed.js');
+		    s('//ractivejs.disqus.com/count.js');
+		})();
+	</script>
+
+	<script src="../../assets/prettify.js"></script>
+	<script>
+		prettyPrint();
+	</script>
+	</body>
+</html>

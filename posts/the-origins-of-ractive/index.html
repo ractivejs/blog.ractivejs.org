@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>The origins of Ractive | Blog | Ractive.js</title>
+
+	<link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+	<link rel="stylesheet" href="../../min.css">
+
+	<!--[if lte IE 8]>
+		<script src='../../assets/respond.min.js'></script>
+		<script src='../../assets/html5shiv.min.js'></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<nav>
+	<div class="nav-inner">
+		<a href="http://ractivejs.org">Ractive.js</a>
+
+		<ul>
+			<li><a href=http://ractivejs.org/60-second-setup>60 second setup</a></li>
+			<li><a href=http://learn.ractivejs.org>Tutorials</a></li>
+			<li><a href=http://examples.ractivejs.org>Examples</a></li>
+			<li><a href=http://docs.ractivejs.org>Docs</a></li>
+			<li><a href=http://docs.ractivejs.org/latest/plugins>Plugins</a></li>
+			<li class=selected><a href=http://blog.ractivejs.org>Blog</a></li>
+			<li class=github-small><a href=https://github.com/ractivejs/ractive>GitHub</a></li>
+		</ul>
+
+		<a class="github-wide" href="https://github.com/ractivejs/ractive">GitHub</a>
+
+		<button id="nav-toggle">&#9776;</button>
+	</div>
+</nav>
+		<header class="post-header">
+			<h1>The origins of Ractive</h1>
+			<p class="meta">
+				<a href="http://twitter.com/Rich_Harris">Rich Harris</a>
+				
+				<span class="bullet">&bull;</span> 31 December 2013 <span class="bullet">&bull;</span> <a href="#disqus_thread" data-disqus-identifier="the-origins-of-ractive">Comments</a>
+			</p>
+		</header>
+
+		<main>
+			<article class="post">
+				<p><em>Originally posted on <a href="http://source.opennews.org/en-US/articles/introducing-ractivejs/">Source</a>, the blog for newsroom developers and hacker-journalists</em></p>
+<p>Making interactives is hard. You have to:</p>
+<ul>
+<li>figure out the story</li>
+<li>find some data (possibly) and clean it/transform it (almost certainly)</li>
+<li>design a user interface</li>
+<li>mark it up with HTML</li>
+<li>style it with CSS</li>
+<li>make it dance with JavaScript</li>
+<li>test it in different browsers and on mobile devices</li>
+<li>deploy it</li>
+<li>fix all the bugs you missed</li>
+<li>deploy it again</li>
+</ul>
+<p>...and you have to do all that against deadlines that would make most developers wince. And yet here’s the thing: in many newsrooms, the people building these interactive stories — and in so doing figuring out the rules of a <a href="https://vimeo.com/67076984">fundamentally new form of media</a> — are not experienced developers.</p>
+<p>They’re journalist-hackers and lone crusaders, fighting for the future of news against (in some cases) bureaucratic overlords who still think video on the web is the next big thing. And they—we—deserve better weapons for the fight.</p>
+<h2 id="origins">Origins</h2>
+<p>Two years ago, as a journalist at <a href="http://citywire.co.uk/money">Citywire</a>, I began tinkering with JavaScript. I was lucky—I had supportive bosses, and the dev team decided it was better to help me become less dangerous than to try and shut me down—and so we were able to produce a few interactives, such as <a href="http://citywire.co.uk/money/interactive-how-much-has-rent-gone-up-in-your-area/a538600">this piece on UK-wide rent hikes</a>.</p>
+<p>But I was so far out of my depth. Keeping all the different components of an interactive in sync, handling user events like mouse clicks, storing dozens of references to jQuery objects so I could manipulate them—it was chaos. I longed for a library that would help me do all these things.</p>
+<p>Later, when I joined the <a href="http://www.theguardian.com/profile/guardian-interactive-department">Guardian Interactive team</a>, I found myself surrounded by brilliant and experienced developers, and quickly realised my jQuery spaghetti wasn’t going to cut it any more. But if my dream library didn’t exist, I was going to have to build it.</p>
+<h2 id="how-does-ractive-js-help-">How does Ractive.js help?</h2>
+<p>The core premise of Ractive is that <em>declarative programming</em> is easier than <em>imperative programming</em>. In other words, if you can <em>declare</em> your intentions, rather than laboriously describing the steps you want the computer to take to realise your intentions, you can finish work and get to the pub sooner.</p>
+<p>What this means in practice is that more of your app is defined in HTML templates. To take the simplest possible example, let’s make a Hello World template:</p>
+<pre class="prettyprint lang-html">&lt;p&gt;Hello, {{name}}!&lt;/p&gt;</pre>
+
+<p>Describing our interactive with an HTML template is obviously better than <code>document.createElement(&#39;p&#39;).innerHTML = &#39;Hello ,&#39; + name + &#39;!&#39;</code> — very few people would dispute that. But where Ractive differs radically from other templating libraries is that it <em>parses</em> the HTML and fully understands its structure — and the bits of data it depends on — rather than simply replacing <code>{{name}}</code> and dumping the resulting HTML onto the page.</p>
+<p>The result is that updating the interactive with new data is painless:</p>
+<pre class="prettyprint lang-js">ractive.set( 'name', 'World' );</pre>
+
+<p>Moreover, because Ractive is <em>state-aware</em>, it can avoid doing unnecessary updates, thus easing what’s generally considered to be the biggest performance bottleneck in web development.</p>
+<h2 id="that-s-just-the-beginning">That’s just the beginning</h2>
+<p>It turns out that this approach makes it really easy to do a whole suite of things—animations, SVG data visualisations, neater event handling, collecting user input, and so on.</p>
+<p>If these sound like things that could make your life easier then you can find all the <a href="http://examples.ractivejs.org">examples</a>, <a href="http://learn.ractivejs.org">tutorials</a> and <a href="https://github.com/Rich-Harris/Ractive/wiki">documentation</a> you need to get started—including the <a href="http://www.ractivejs.org/60-second-setup">60-second set-up</a> — via <a href="http://www.ractivejs.org/">ractivejs.org</a>.</p>
+<p>Ractive has been used to build a number of Guardian interactives, so even though development is still ongoing (<a href="https://github.com/Rich-Harris/Ractive/issues">issues and pull requests</a> are always welcome!) it’s definitely production-ready. It’s been tested successfully in IE8+ and in all modern browsers.</p>
+<p>If you build something with Ractive, we’d love to hear about it.</p>
+<h2 id="acknowledgment">Acknowledgment</h2>
+<p>The development of Ractive.js was made possible, in part, by the <a href="http://www.gatesfoundation.org/">Bill &amp; Melinda Gates Foundation</a>’s support for <a href="http://www.theguardian.com/global-development/">Guardian Global development</a>.</p>
+
+
+			</article>
+
+			<section class="comments">
+				<div id="disqus_thread"></div>
+				<noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+				<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class=logo-disqus>Disqus</span></a>
+			</section>
+		</main>
+	<footer>
+	<p>Ractive.js is a free and open source project released under the MIT license.</p>
+</footer>
+
+
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-5602942-5', 'ractivejs.org');
+	ga('send', 'pageview');
+</script>
+
+
+
+	<script>
+		// Disqus
+		var disqus_shortname = 'ractivejs';
+		var disqus_identifier = 'the-origins-of-ractive';
+		var disqus_url = 'http://blog.ractivejs.org/posts/the-origins-of-ractive';
+
+		(function() {
+		    var s = function (url) {
+		    	var scr = document.createElement('script'); scr.type = 'text/javascript'; scr.async = true;
+		    	scr.src = url;
+		    	(document.head || document.body).appendChild(scr);
+		    };
+		    s('//ractivejs.disqus.com/embed.js');
+		    s('//ractivejs.disqus.com/count.js');
+		})();
+	</script>
+
+	<script src="../../assets/prettify.js"></script>
+	<script>
+		prettyPrint();
+	</script>
+	</body>
+</html>

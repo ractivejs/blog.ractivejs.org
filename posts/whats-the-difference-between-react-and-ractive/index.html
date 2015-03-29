@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>What's the difference between React and Ractive? | Blog | Ractive.js</title>
+
+	<link rel="icon" type="image/png" href="../../assets/favicon.png">
+
+	<link rel="stylesheet" href="../../min.css">
+
+	<!--[if lte IE 8]>
+		<script src='../../assets/respond.min.js'></script>
+		<script src='../../assets/html5shiv.min.js'></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<nav>
+	<div class="nav-inner">
+		<a href="http://ractivejs.org">Ractive.js</a>
+
+		<ul>
+			<li><a href=http://ractivejs.org/60-second-setup>60 second setup</a></li>
+			<li><a href=http://learn.ractivejs.org>Tutorials</a></li>
+			<li><a href=http://examples.ractivejs.org>Examples</a></li>
+			<li><a href=http://docs.ractivejs.org>Docs</a></li>
+			<li><a href=http://docs.ractivejs.org/latest/plugins>Plugins</a></li>
+			<li class=selected><a href=http://blog.ractivejs.org>Blog</a></li>
+			<li class=github-small><a href=https://github.com/ractivejs/ractive>GitHub</a></li>
+		</ul>
+
+		<a class="github-wide" href="https://github.com/ractivejs/ractive">GitHub</a>
+
+		<button id="nav-toggle">&#9776;</button>
+	</div>
+</nav>
+		<header class="post-header">
+			<h1>What's the difference between React and Ractive?</h1>
+			<p class="meta">
+				<a href="http://twitter.com/Rich_Harris">Rich Harris</a>
+				
+				<span class="bullet">&bull;</span> 6 May 2014 <span class="bullet">&bull;</span> <a href="#disqus_thread" data-disqus-identifier="whats-the-difference-between-react-and-ractive">Comments</a>
+			</p>
+		</header>
+
+		<main>
+			<article class="post">
+					<figure class="poster type-medium">
+						
+							<img alt="" src="../../assets/images/react-v-ractive.png">
+											</figure>
+				<p>The last post on this blog attempted to <a href="../whats-the-difference-between-angular-and-ractive">compare Ractive.js with Angular.js</a> &ndash; two very different projects with superficial similarities. This time, we&#39;ll be comparing Ractive with <a href="http://facebook.github.io/react">React.js</a>, which despite appearances is much closer to Ractive in terms of purpose and philosophy.</p>
+<h2 id="what-is-react-">What is React?</h2>
+<p>The <a href="http://facebook.github.io/react">project homepage</a> calls React &#39;a JavaScript library for building user interfaces&#39;, and goes on to describe it as &#39;the V in MVC&#39;. In other words, it has one job &ndash; taking your application state and turning it into a <em>view</em> that can be displayed to the user. This focus separates it from frameworks like Angular and Ember.js, which handle things like routing, and communicating with a server, and myriad other concerns in addition to managing views.</p>
+<p>What&#39;s really interesting about React is <em>how</em> it does its job. As Chris Granger <a href="https://twitter.com/ibdknox/status/413363120862535680">describes it</a>, React is &#39;the <a href="http://en.wikipedia.org/wiki/Immediate_mode">immediate mode</a> abstraction over the <a href="http://en.wikipedia.org/wiki/Retained_mode">retained mode</a> DOM&#39;. Rather than describing what changes are required to bring the view up to date, you describe <em>what the view should look like</em>. Under the hood, React uses <a href="http://calendar.perfplanet.com/2013/diff/">smart algorithms</a> to &#39;diff&#39; that description with the current state of the DOM, then tells the browser what it needs to do.</p>
+<h2 id="the-similarities-between-ractive-and-react">The similarities between Ractive and React</h2>
+<p>React&#39;s first public release came about a month before Ractive&#39;s. I distinctly remember reading <a href="https://news.ycombinator.com/item?id=5789055">the post on Hacker News</a> and thinking &#39;well I may as well give up&#39; &ndash; so many of Ractive&#39;s ideas, which a day earlier had seemed entirely novel, had already been implemented by a team of engineers with the might of Facebook behind them.</p>
+<p>The most striking similarity was the use of a <em>virtual DOM</em>. Like Ractive, React had discovered that creating an abstract representation of the DOM allows for lightning-fast operations by minimising the amount of DOM manipulation (the bottleneck in most webapps) that needs to take place. It also facilitates server-side rendering without some of the <a href="http://www.yearofmoo.com/2012/11/angularjs-and-seo.html">crazy hacks</a> users of other tools have had to employ.</p>
+<p>Another was the focus on <em>reactive programming</em>. This is one of those phrases that threatens to become meaningless with overuse, but it&#39;s a useful concept. Put simply, in a reactive system where the value of <code>b</code> depends on the value of <code>a</code>, if <code>a</code> changes then <code>b</code> will also change. Applied to user interfaces, that means that when your application state changes, your view also changes. With traditional MVC libraries you typically have to implement all your render logic manually and wire it up with a web of publish/subscribe events; with React and Ractive you&#39;re spared that (tedious, error-prone, hard-to-optimise) step when building your apps.</p>
+<p>Finally, both libraries believe that the way to help developers build complex apps is to give them tools that encourage <em>simplicity</em> and <em>composability</em> and then get out of their way.</p>
+<p>Having said all that, there are also some stark differences.</p>
+<h2 id="templating">Templating</h2>
+<p>The most obvious way in which the two libraries differ is that Ractive wholly embraces templating &ndash; specifically, views are described using a variant of <a href="mustache.github.com">Mustache</a>, extended to include inline JavaScript expressions. Support for other languages is on the roadmap.</p>
+<aside>
+    <div class='aside-inner'>
+        <p>The logic-less template cultists would have you believe that allowing expressions in templates is a Bad Thing. <a href="http://www.boronine.com/2012/09/07/Cult-Of-Logic-less-Templates/">They&#39;re wrong</a>. <a href="../ractive-js-expressions-and-the-new-wave-of-reactive-programming/">Here&#39;s why</a>.</p>
+    </div>
+</aside>
+
+<p>React doesn&#39;t use templating. Instead, you describe your view by calling functions like <code>React.DOM.div(props, children)</code>.</p>
+<p>This is, it must be said, a totally brilliant idea. It means that your view code is subject to the same rules as the rest of your app &ndash; it gets linted, analysed and optimised with everything else, and allows you to (for example) use functional programming techniques.</p>
+<p>But personally, I still prefer templates. Manipulating markup, rather than code, brings you closer to the final rendered UI, and (in general) allows you to express the same ideas more concisely. The striking thing about markup is that it&#39;s as easy to read as to write, which is a huge productivity boon when working in a team. HTML is generally the first thing new web developers learn, and it is so pervasive in web dev culture (manifested in a million ways, from the vast quantities of high quality learning and reference materials to that fact that every text editor supports HTML syntax highlighting out of the box), that embracing HTML means embracing the entire skill spectrum of the web developer community.</p>
+<p>As someone who <a href="../the-origins-of-ractive">learned to code in a newsroom</a>, and works alongside others walking the same path, I believe that creating tools that beginners can use, as well as experts, is our most urgent task.</p>
+<h2 id="change-tracking">Change tracking</h2>
+<p>React re-renders the entire app on each state change, and diffs the result. Ractive, on the other hand, implements a change tracking mechanism, so only a subset of the virtual DOM gets notified of any change.</p>
+<p>There&#39;s no right answer to the question &#39;which approach is better?&#39;. Ractive&#39;s more conservative approach is often faster &ndash; as you&#39;d expect, because there&#39;s generally less work to do &ndash; but React&#39;s is undoubtedly <em>simpler</em>, in the sense of that word <a href="http://www.infoq.com/presentations/Simple-Made-Easy">as used by Clojure author Rich Hickey</a>. (The Clojure community appears to have had a profound influence on React&#39;s design, as evidenced by its popularity among prominent ClojureScript developers such as <a href="https://twitter.com/swannodette">David Nolen</a>, the author of <a href="https://github.com/swannodette/om">Om</a>, and the aforementioned Chris Granger who created <a href="http://www.lighttable.com/">Light Table</a>.)</p>
+<p>One point is worth noting however. Unlike just about every other data-binding tool (except Angular, which does something totally different), Ractive doesn&#39;t require you to wrap your data up in some library-specific observable class (e.g. <code>ko.observable()</code> or <code>Backbone.Model()</code>) &ndash; a requirement that React developers criticise, not without justification. Instead, it uses an approach based on <a href="http://docs.ractivejs.org/latest/keypaths">keypaths</a>, which means you can use plain old JavaScript objects (though you certainly can use observables, with the use of <a href="http://docs.ractivejs.org/latest/adaptors">adaptors</a>, if that&#39;s how your app is built).</p>
+<h2 id="two-way-binding">Two-way binding</h2>
+<p>Most data-binding tools implement some form of <em>two-way binding</em>, where user interaction &ndash; such as text entry in an <code>&lt;input&gt;</code> element, or toggling a checkbox &ndash; causes the application state to be updated. Implementing this manually is often finicky and requires the developer to be aware of various browser inconsistencies, and so robust two-way binding support is a real timesaver.</p>
+<p>React rejects this. In the React world, data flows one way &ndash; from parent to child &ndash; and two-way binding is seen as a source of bugs and confusion since (<a href="https://twitter.com/asolove/status/459391361310269441">its detractors say</a>) there&#39;s no longer a &#39;single source of truth&#39; (SSOT).</p>
+<p>Done correctly, two-way binding doesn&#39;t violate SSOT at all &ndash; it simply means that the <code>&lt;input&gt;</code> automatically <em>requests</em> changes to the SSOT without each developer having to write bothersome (and possibly incorrect!) boilerplate code. In my experience, two-way binding is a huge productivity win.</p>
+<p>Having said that, particularly complex interactions between Ractive components <em>have</em> been a source of bugs in the past. Our test suite will guard against those bugs reappearing, but it&#39;s fair to say that my life would have been easier for a couple of weeks earlier this year had two-way binding never been possible in Ractive.</p>
+<p>Would we design the library differently now? No &ndash; I believe that solving these hard problems on developers&#39; behalf is exactly what a library like Ractive is for.</p>
+<h2 id="where-react-shines">Where React shines</h2>
+<p>It&#39;s only fair to point out that React is <em>extremely</em> well battle-tested, having been used at <a href="http://facebook.com">facebook.com</a> (you may have heard of it?) for some time. If it&#39;s good enough for them (where &#39;good&#39; is defined as performant, testable, maintainable and so on) then it&#39;s almost certainly good enough for the rest of us.</p>
+<p>The React community is smart and passionate. Not just smart &ndash; <em>wise</em>. The attention to code quality is obvious. Online and in real life, React people are thoughtful, interesting and kind: these things matter.</p>
+<p>React beats Ractive on <em>clarity of vision</em>. When you hear React people talk, it&#39;s obvious that it wasn&#39;t created as a slightly-better version of what already existed; it&#39;s an implementation of ideas that are simultaneously ancient (in programming terms) and radical. Ractive, on the other hand, grew <em>into</em> its philosophy, from a starting point of &#39;here are some tasks that are way harder than they ought to be&#39;.</p>
+<p>In short, I&#39;d recommend React as the best way to build user interfaces, if Ractive didn&#39;t exist!</p>
+<h2 id="where-ractive-shines">Where Ractive shines</h2>
+<p>For starters, you can <a href="http://www.ractivejs.org/60-second-setup">learn Ractive in 60 seconds</a>. If you know HTML and the basics of Mustache (which itself has almost zero learning curve), then all you need to learn is the <code>ractive.set()</code> method and you&#39;re already most of the way there. People of all levels of experience &#39;get&#39; Ractive very quickly, because there are so few concepts to learn.</p>
+<p>Because of Ractive&#39;s newsroom heritage, it has always prioritised certain features that make it easy to build UIs that are <em>slick</em> &ndash; declarative transitions, animations, and first-class SVG support. A Ractive component can include CSS in its definition, which is encapsulated by default (i.e. component styles don&#39;t leak into the page). These are tricky problems that other libraries have, for the most part, yet to solve well, if at all.</p>
+<p>Like React, Ractive&#39;s community is awesome. I&#39;m constantly amazed and humbled by people&#39;s readiness to help each other with creative solutions to tricky problems, and then to work on baking those solutions into the library. I&#39;m truly excited to see how Ractive develops, because the direction is so heavily driven by real-world problem solving that it&#39;s impossible to predict what will happen next.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>And I&#39;m excited to see where React goes too. I hope the respect I have for the library and its developers is apparent in this post: it really is a great tool.</p>
+<p>So which should you use? Try both. It&#39;s an interesting time to be in this space because there are so many competing ideas; if we want the best ones to win, they each need to go under the microscope.</p>
+
+
+			</article>
+
+			<section class="comments">
+				<div id="disqus_thread"></div>
+				<noscript>Please enable JavaScript to view the <a href=http://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+				<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class=logo-disqus>Disqus</span></a>
+			</section>
+		</main>
+	<footer>
+	<p>Ractive.js is a free and open source project released under the MIT license.</p>
+</footer>
+
+
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-5602942-5', 'ractivejs.org');
+	ga('send', 'pageview');
+</script>
+
+
+
+	<script>
+		// Disqus
+		var disqus_shortname = 'ractivejs';
+		var disqus_identifier = 'whats-the-difference-between-react-and-ractive';
+		var disqus_url = 'http://blog.ractivejs.org/posts/whats-the-difference-between-react-and-ractive';
+
+		(function() {
+		    var s = function (url) {
+		    	var scr = document.createElement('script'); scr.type = 'text/javascript'; scr.async = true;
+		    	scr.src = url;
+		    	(document.head || document.body).appendChild(scr);
+		    };
+		    s('//ractivejs.disqus.com/embed.js');
+		    s('//ractivejs.disqus.com/count.js');
+		})();
+	</script>
+
+	<script src="../../assets/prettify.js"></script>
+	<script>
+		prettyPrint();
+	</script>
+	</body>
+</html>
