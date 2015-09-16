@@ -144,7 +144,7 @@ As our app becomes more complex, this approach scales beautifully, saving us fro
 
 <aside>
 	<div class='aside-inner'>
-		<p>You can see a [fully fleshed out TodoMVC implementation here](http://todomvc.com/labs/architecture-examples/ractive/) – (the [source code](https://github.com/tastejs/todomvc/tree/gh-pages/labs/architecture-examples/ractive) is possibly the shortest of any implementation, and arguably some of the most readable).</p>
+		<p>You can see a [fully fleshed out TodoMVC implementation here](http://todomvc.com/examples/ractive/) – (the [source code](https://github.com/tastejs/todomvc/tree/gh-pages/examples/ractive) is possibly the shortest of any implementation, and arguably some of the most readable).</p>
 	</div>
 </aside>
 
